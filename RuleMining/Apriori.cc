@@ -1,15 +1,29 @@
 using namespace std;
 
 namespace {
+  unordered_set<string> getFrequent(int num_transactions, unordered_map<string, int> set_counts,
+                                    float minsup) {
+    unordered_set<string> frequent_items;
+    for (string item, int count: set_counts) {
+      if (count > minsup*num_transactions) {
+        frequent_items.push_back(item);
+      }
+    }
+    return frequent_items;
+  }
 
+  unordered_set<string> larger_frequent_itemsets(unordered_set<string> frequent_items,
+                                                 vector<string> transactions, float minsup) {
+    unordered_map<string, int> counts;
+
+    return getFrequent(transactions.size(), counts, minsup);
+  }
 } //  end namespace
 
 int main(int argc, char** argv) {
-  // expect filename, and support and confidence thresholds passed in
-  // parse file, each line is a new 'transaction'
-  // can count support of each item (need a standardized delimter)
   // continue getting frequent itemsets until no more larger (support pruning)
   // (confidence pruning)
+  // need a standardized delimiter that distinguishes 'items'
   string delim = " ";
   char *filename = (char *)"Testing/dat1.txt";
   float minsup = 0.75f;
@@ -40,7 +54,7 @@ int main(int argc, char** argv) {
   }
 
   // items, counts, 'transactions'
-  unordered_map<string, int> oneset_count;
+  unordered_map<string, int> oneset_counts;
   vector<string> transactions;
   {
     ifstream in(filename);
@@ -76,11 +90,6 @@ int main(int argc, char** argv) {
     fclose(in);
   }
 
-  unordered_set<string> frequent_items;
-  for (string item, int count: oneset_count) {
-    if (count > minsup*transactions) {
-      frequent_items.push_back(item);
-    }
-  }
+  unordered_set<string> frequent_items = getFrequent(transactions.size(), oneset_counts, minsup);
   return 0;
 }
