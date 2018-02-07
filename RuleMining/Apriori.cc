@@ -1,6 +1,7 @@
 #include <fstream>
 #include <iterator>
 #include <iostream>
+#include <set>
 #include <sstream>
 #include <unordered_map>
 #include <unordered_set>
@@ -9,7 +10,7 @@
 using namespace std;
 
 namespace {
-  string sjoin(unordered_set<string> s) {
+  string sjoin(const set<string> &s) {
     stringstream ss;
     int i = 0;
     for(string str : s) {
@@ -22,7 +23,7 @@ namespace {
     return ss.str();
   }
 
-  string vjoin(vector<string> v) {
+  string vjoin(const vector<string> &v) {
     stringstream ss;
     for(int i = 0; i < v.size(); ++i) {
       if(i != 0) {
@@ -44,17 +45,17 @@ namespace {
   }
 
   unordered_set<string> getFrequent(int num_transactions, float minsup,
-                                    unordered_map<string, int> set_counts) {
+                                    const unordered_map<string, int> &set_counts) {
     unordered_set<string> frequent_items;
-    for (const auto& item_count: set_counts) {
-      if (item_count.second > minsup*num_transactions) {
+    for (auto item_count: set_counts) {
+      if (item_count.second >= minsup*num_transactions) {
         frequent_items.insert(item_count.first);
       }
     }
     return frequent_items;
   }
 
-  unordered_set<string> getLargerItemsets(unordered_set<string> frequent_items) {
+  unordered_set<string> getLargerItemsets(const unordered_set<string> &frequent_items) {
     // Turn string itemsets into their sets.
     vector<vector<string>> frequent_sets;
     for (string itemset : frequent_items) {
@@ -65,7 +66,7 @@ namespace {
     unordered_set<string> true_larger_sets;
     for (int i = 0; i < frequent_sets.size(); ++i) {      // Get all set unions.
       for (int j = i+1; j < frequent_sets.size(); ++j) {
-        unordered_set<string> itemset(frequent_sets[i].begin(), frequent_sets[i].end());
+        set<string> itemset(frequent_sets[i].begin(), frequent_sets[i].end());
         for (int z = 0; z < k; ++z) {
           itemset.insert(frequent_sets[j][z]);
         }
@@ -79,8 +80,8 @@ namespace {
     return true_larger_sets;
   }
 
-  unordered_set<string> largerFrequentItemsets(unordered_set<string> frequent_items,
-                                               vector<unordered_set<string>> transactions,
+  unordered_set<string> largerFrequentItemsets(const unordered_set<string> &frequent_items,
+                                               const vector<unordered_set<string>> &transactions,
                                                float minsup) {
     unordered_map<string, int> counts;
     unordered_set<string> potential_freq = getLargerItemsets(frequent_items);
@@ -91,7 +92,6 @@ namespace {
       potential_freq_v.push_back(split(itemset));
     }
     int k = potential_freq_v[0].size();
-
     bool subset = true;
     for (vector<string> freq_v : potential_freq_v) {
       for (int j = 0; j < transactions.size(); ++j) {
@@ -111,10 +111,9 @@ namespace {
 } //  end namespace
 
 int main(int argc, char** argv) {
-  // continue getting frequent itemsets until no more larger (support pruning)
   // (confidence pruning)
-  char *filename = (char *)"Testing/dat1.txt";
-  float minsup = 0.75f;
+  char *filename = (char *)"../Testing/dat1.txt";
+  float minsup = 0.375f;
   float minconf = 0.8f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
@@ -149,7 +148,7 @@ int main(int argc, char** argv) {
   {
     ifstream in(filename);
 
-    if (in.good()) {
+    if (!in.good()) {
         fprintf(stderr, "Can't open transactions file\n");
         return -1;
     }
@@ -164,6 +163,7 @@ int main(int argc, char** argv) {
         // Note if element exists, this increments, if it does not it is init
         // to 0 then incremented to 1.
         item = transaction.substr(start, end - start);
+
         // Ensure uniqueness per transaction
         // Sets maintain uniquesness, however we want to count elements as well, this allows us to
         // limit iterations (we won't have to iterate through the set after).
@@ -186,16 +186,20 @@ int main(int argc, char** argv) {
     }
     in.close();
   }
-
   unordered_set<string> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_counts);
 
   unordered_set<string> next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
   unordered_set<string> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
   while (next_sets.size() > 1) {
     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-    next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
+    next_sets = largerFrequentItemsets(next_sets, transactions, minsup);
   }
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+
+  printf("-------------Frequent Itemsets------------\n");
+  for (string itemset : frequent_itemsets) {
+    printf("%s\n", itemset.c_str());
+  }
 
   return 0;
 }
