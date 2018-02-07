@@ -1,10 +1,10 @@
 using namespace std;
 
 namespace {
-  unordered_set<string> getFrequent(int num_transactions, unordered_map<string, int> set_counts,
+  vector<unordered_set<string>> getFrequent(int num_transactions, unordered_map<unordered_set<string>, int> set_counts,
                                     float minsup) {
-    unordered_set<string> frequent_items;
-    for (string item, int count: set_counts) {
+    vector<unordered_set<string>> frequent_items;
+    for (unordered_set<string> item, int count: set_counts) {
       if (count > minsup*num_transactions) {
         frequent_items.push_back(item);
       }
@@ -23,8 +23,6 @@ namespace {
 int main(int argc, char** argv) {
   // continue getting frequent itemsets until no more larger (support pruning)
   // (confidence pruning)
-  // need a standardized delimiter that distinguishes 'items'
-  string delim = " ";
   char *filename = (char *)"Testing/dat1.txt";
   float minsup = 0.75f;
   float minconf = 0.8f;
@@ -53,9 +51,11 @@ int main(int argc, char** argv) {
       }
   }
 
-  // items, counts, 'transactions'
-  unordered_map<string, int> oneset_counts;
-  vector<string> transactions;
+  // Items, counts, 'transactions'.
+  unordered_map<unordered_set<string>, int> oneset_counts;
+  vector<unordered_set<string>> transactions;
+  // Need a standardized delimiter that distinguishes 'items'.
+  string delim = " ";
   {
     ifstream in(filename);
 
@@ -66,30 +66,36 @@ int main(int argc, char** argv) {
 
     string transaction;
     while (getLine(in, transaction)) {
-      transactions.push_back(transaction);
       int start = 0, end = transaction.find(delim);
       unordered_set<string> items_curr;
 
-      while (end != string::npos) { // each individual word
+      while (end != string::npos) {
         // Note if element exists, this increments, if it does not it is init
         // to 0 then incremented to 1.
         string item = transaction.substr(start, end - start);
         // Ensure uniqueness per transaction
+        // Sets maintain uniquesness, however we want to count elements as well, this allows us to
+        // limit iterations (we won't have to iterate through the set after).
         if (items_curr.find(item) == items_curr.end()) {
-          oneset_count[item]++;
-          start = end + 1;
-          end = transaction.find(delim, start);
-
+          oneset_counts[unordered_set<string>(item)]++;
           items_curr.push_back(item);
         }
+
+        start = end + 1;
+        end = transaction.find(delim, start);
       }
+
+      item = transaction.substr(start);
       if (items_curr.find(item) == items_curr.end()) {
-        oneset_count[push_back(transaction.substr(start, end - start))]++;
+        oneset_counts[unordered_set<string>(item)]++;
+        items_curr.push_back(item);
       }
+
+      transactions.push_back(items_curr);
     }
     fclose(in);
   }
 
-  unordered_set<string> frequent_items = getFrequent(transactions.size(), oneset_counts, minsup);
+  vector<unordered_set<string>> frequent_items = getFrequent(transactions.size(), oneset_counts, minsup);
   return 0;
 }
