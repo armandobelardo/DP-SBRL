@@ -187,6 +187,15 @@ int main(int argc, char** argv) {
     in.close();
   }
 
-  unordered_set<string> frequent_items = getFrequent(transactions.size(), minsup, oneset_counts);
+  unordered_set<string> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_counts);
+
+  unordered_set<string> next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
+  unordered_set<string> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
+  while (next_sets.size() > 1) {
+    frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+    next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
+  }
+  frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+
   return 0;
 }
