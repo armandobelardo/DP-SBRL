@@ -1,5 +1,7 @@
 #include <fstream>
+#include <iterator>
 #include <iostream>
+#include <sstream>
 #include <unordered_map>
 #include <unordered_set>
 #include <vector>
@@ -9,11 +11,13 @@ using namespace std;
 namespace {
   string sjoin(unordered_set<string> s) {
     stringstream ss;
-    for(int i = 0; i < s.size(); ++i) {
+    int i = 0;
+    for(string str : s) {
       if(i != 0) {
         ss << " ";
       }
-      ss << s[i];
+      ss << str;
+      i++;
     }
     return ss.str();
   }
@@ -52,27 +56,23 @@ namespace {
 
   unordered_set<string> getLargerItemsets(unordered_set<string> frequent_items) {
     // Turn string itemsets into their sets.
-    unordered_set<vector<string>> frequent_sets;
+    vector<vector<string>> frequent_sets;
     for (string itemset : frequent_items) {
-      frequent_sets.insert(split(itemset));
+      frequent_sets.push_back(split(itemset));
     }
     int k = frequent_sets[0].size();
 
-    unordered_set<unordered_set<string>> larger_sets;
+    unordered_set<string> true_larger_sets;
     for (int i = 0; i < frequent_sets.size(); ++i) {      // Get all set unions.
       for (int j = i+1; j < frequent_sets.size(); ++j) {
-        unordered_set<string> itemset(frequent_sets[i]);
+        unordered_set<string> itemset(frequent_sets[i].begin(), frequent_sets[i].end());
         for (int z = 0; z < k; ++z) {
           itemset.insert(frequent_sets[j][z]);
         }
-        larger_sets.insert(itemset);
-      }
-    }
 
-    unordered_set<string> true_larger_sets;
-    for (unordered_set<string> larger_set: larger_sets) {
-      if (larger_set.size() == k+1) {
-        true_larger_sets.insert(sjoin(larger_set));
+        if (itemset.size() == k+1) {
+          true_larger_sets.insert(sjoin(itemset));
+        }
       }
     }
 
@@ -86,21 +86,22 @@ namespace {
     unordered_set<string> potential_freq = getLargerItemsets(frequent_items);
 
     // Count occurences of potential frequent itemsets, size k+1.
-    unordered_set<vector<string>> potential_freq_s;
+    vector<vector<string>> potential_freq_v;
     for (string itemset : potential_freq) {
-      potential_freq_s.insert(split(itemset));
+      potential_freq_v.push_back(split(itemset));
     }
-    int k = potential_freq[0].size();
+    int k = potential_freq_v[0].size();
 
     bool subset = true;
-    for (int i = 0; i < potential_freq.size(); ++i) {      // FIX: FOR EACH LOOP OVER MAP
+    for (vector<string> freq_v : potential_freq_v) {
       for (int j = 0; j < transactions.size(); ++j) {
         for (int z = 0; z < k; ++z) {
-          if (transactions[j].find(first) == transactions[j].end()) {
+          if (transactions[j].find(freq_v[z]) == transactions[j].end()) {
             subset = false;
+            break;
           }
         }
-        if (subset) counts[potential_freq[i]]++;
+        if (subset) counts[vjoin(freq_v)]++;
         subset = true;
       }
     }
