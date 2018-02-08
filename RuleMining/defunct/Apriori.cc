@@ -1,4 +1,3 @@
-#include <algorithm>
 #include <fstream>
 #include <iterator>
 #include <iostream>
@@ -45,48 +44,35 @@ namespace {
     return str_v;
   }
 
-  unordered_map<string, vector<int>> getFrequent(int num_transactions, float minsup,
-                                                 unordered_map<string, vector<int>> &set_supports) {
-    unordered_map<string, vector<int>> frequent_items;
-    for (auto item_count: set_supports) {
-      if (item_count.second.size() >= minsup*num_transactions) {
-        frequent_items[item_count.first] = vector<int>(item_count.second.begin(), item_count.second.end());
+  unordered_set<string> getFrequent(int num_transactions, float minsup,
+                                    const unordered_map<string, int> &set_counts) {
+    unordered_set<string> frequent_items;
+    for (auto item_count: set_counts) {
+      if (item_count.second >= minsup*num_transactions) {
+        frequent_items.insert(item_count.first);
       }
     }
     return frequent_items;
   }
 
-  unordered_map<string, vector<int>> getLargerItemsets(const unordered_map<string, vector<int>>
-                                                       &frequent_items) {
+  unordered_set<string> getLargerItemsets(const unordered_set<string> &frequent_items) {
     // Turn string itemsets into their sets.
     vector<vector<string>> frequent_sets;
-    vector<vector<int>> frequent_supp;
-    for (auto itemset_support : frequent_items) {
-      frequent_sets.push_back(split(itemset_support.first));
-      frequent_supp.push_back(itemset_support.second);
+    for (string itemset : frequent_items) {
+      frequent_sets.push_back(split(itemset));
     }
     int k = frequent_sets[0].size();
 
-    unordered_map<string, vector<int>> true_larger_sets;
+    unordered_set<string> true_larger_sets;
     for (int i = 0; i < frequent_sets.size(); ++i) {      // Get all set unions.
       for (int j = i+1; j < frequent_sets.size(); ++j) {
         set<string> itemset(frequent_sets[i].begin(), frequent_sets[i].end());
-        vector<int>::iterator it;
         for (int z = 0; z < k; ++z) {
           itemset.insert(frequent_sets[j][z]);
         }
 
-        // Note the support of a joined set is the intersection of their supports
         if (itemset.size() == k+1) {
-          vector<int> support(frequent_supp[i].size() + frequent_supp[j].size());
-          sort(frequent_supp[i].begin(), frequent_supp[i].end());
-          sort(frequent_supp[j].begin(), frequent_supp[j].end());
-          it = set_intersection(frequent_supp[i].begin(), frequent_supp[i].end(),
-                                frequent_supp[j].begin(), frequent_supp[j].end(),
-                                support.begin());
-          support.resize(it-support.begin());
-
-          true_larger_sets[sjoin(itemset)] = support;
+          true_larger_sets.insert(sjoin(itemset));
         }
       }
     }
@@ -94,13 +80,34 @@ namespace {
     return true_larger_sets;
   }
 
-  unordered_map<string, vector<int>> largerFrequentItemsets(const unordered_map<string, vector<int>> &frequent_items,
-                                                            const vector<unordered_set<string>> &transactions,
-                                                            float minsup) {
+  unordered_set<string> largerFrequentItemsets(const unordered_set<string> &frequent_items,
+                                               const vector<unordered_set<string>> &transactions,
+                                               float minsup) {
     unordered_map<string, int> counts;
-    unordered_map<string, vector<int>> potential_freq = getLargerItemsets(frequent_items);
+    unordered_set<string> potential_freq = getLargerItemsets(frequent_items);
 
-    return getFrequent(transactions.size(), minsup, potential_freq);
+    // Count occurences of potential frequent itemsets, size k+1.
+    vector<vector<string>> potential_freq_v;
+    for (string itemset : potential_freq) {
+      potential_freq_v.push_back(split(itemset));
+    }
+    int k = potential_freq_v[0].size();
+    bool subset = true;
+    // TODO: Can just do intersection of the sets of occurences, which would be faster
+    for (vector<string> freq_v : potential_freq_v) {
+      for (int j = 0; j < transactions.size(); ++j) {
+        for (int z = 0; z < k; ++z) {
+          if (transactions[j].find(freq_v[z]) == transactions[j].end()) {
+            subset = false;
+            break;
+          }
+        }
+        if (subset) counts[vjoin(freq_v)]++;
+        subset = true;
+      }
+    }
+
+    return getFrequent(transactions.size(), minsup, counts);
   }
 } //  end namespace
 
@@ -135,7 +142,7 @@ int main(int argc, char** argv) {
   }
 
   // Items, counts, 'transactions'.
-  unordered_map<string, vector<int>> oneset_supports;
+  unordered_map<string, int> oneset_counts;
   vector<unordered_set<string>> transactions;
   // Need a standardized delimiter that distinguishes 'items'.
   string delim = " ";
@@ -148,7 +155,6 @@ int main(int argc, char** argv) {
     }
 
     string transaction;
-    int line = 1;
     while (getline(in, transaction)) {
       int start = 0, end = transaction.find(delim);
       unordered_set<string> items_curr;
@@ -163,7 +169,7 @@ int main(int argc, char** argv) {
         // Sets maintain uniquesness, however we want to count elements as well, this allows us to
         // limit iterations (we won't have to iterate through the set after).
         if (items_curr.find(item) == items_curr.end()) {
-          oneset_supports[item].push_back(line);
+          oneset_counts[item]++;
           items_curr.insert(item);
         }
 
@@ -173,19 +179,18 @@ int main(int argc, char** argv) {
 
       item = transaction.substr(start);
       if (items_curr.find(item) == items_curr.end()) {
-        oneset_supports[item].push_back(line);
+        oneset_counts[item]++;
         items_curr.insert(item);
       }
 
       transactions.push_back(items_curr);
-      line++;
     }
     in.close();
   }
-  unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
-  unordered_map<string, vector<int>> next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
-  printf("hey\n");
-  unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
+  unordered_set<string> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_counts);
+
+  unordered_set<string> next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
+  unordered_set<string> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
   while (next_sets.size() > 1) {
     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
     next_sets = largerFrequentItemsets(next_sets, transactions, minsup);
@@ -193,8 +198,8 @@ int main(int argc, char** argv) {
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   printf("-------------Frequent Itemsets------------\n");
-  for (auto itemset_support : frequent_itemsets) {
-    printf("%s\n", itemset_support.first.c_str());
+  for (string itemset : frequent_itemsets) {
+    printf("%s\n", itemset.c_str());
   }
 
   return 0;
