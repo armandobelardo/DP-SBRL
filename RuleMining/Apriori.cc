@@ -1,4 +1,5 @@
 #include <algorithm>
+#include <deque>
 #include <fstream>
 #include <iterator>
 #include <iostream>
@@ -10,7 +11,27 @@
 
 using namespace std;
 
+struct compare {
+    bool operator()(const string& first, const string& second) {
+        return first.size() < second.size() && first < second;
+    }
+};
+
 namespace {
+  // Join set with spaces.
+  string usjoin(const unordered_set<string> &s) {
+    stringstream ss;
+    int i = 0;
+    for(string str : s) {
+      if(i != 0) {
+        ss << " ";
+      }
+      ss << str;
+      i++;
+    }
+    return ss.str();
+  }
+
   // Join set with spaces.
   string sjoin(const set<string> &s) {
     stringstream ss;
@@ -58,12 +79,7 @@ namespace {
     return frequent_items;
   }
 
-  unordered_map<string, vector<int>> getLargerItemsets(const unordered_map<string, vector<int>>
-                                                       &frequent_items) {
-
-  }
-
-  unordered_map<string, vector<int>> largerFrequentItemsets(const unordered_map<string, vector<int>>
+  unordered_map<string, vector<int>> getLargerFreqItemsets(const unordered_map<string, vector<int>>
                                                             &frequent_items,
                                                             const vector<unordered_set<string>>
                                                             &transactions,
@@ -115,7 +131,39 @@ namespace {
     return true_larger_sets;
   }
 
+  // TODO: Would really like to pass in the map by const ref, but weird error with operator[].
+  vector<pair<set<string>, set<string>>> getRules (const vector<string> &maximal_items,
+                                                                       unordered_map<string, vector<int>>
+                                                                       &frequent_items, const float minconf){
+    vector<pair<set<string>, set<string>>> rules;
+    deque<pair<set<string>, set<string>>> queue;
 
+    // Start with maximal sets, if one is less than conf, remove it and subsets from the queue
+    for (string maximal : maximal_items) {
+      vector<string> maximal_v = split(maximal);
+      set<string> maximal_s(maximal_v.begin(), maximal_v.end());
+      queue.push_back(make_pair(maximal_s, set<string>()));
+
+      pair<set<string>, set<string>> curr;
+      while (!queue.empty()) {
+        curr = queue.front();
+        queue.pop_front();
+        // Make other rules by popping a word off one side and giving it to other side
+        // push back if conf is high enough, disregard if not or if either side is empty
+        for (string word : curr.first) { // all elements
+          pair<set<string>, set<string>> temp(curr);
+          temp.first.erase(word);
+          temp.second.insert(word);
+          vector<int> max_supp = frequent_items[maximal], other_supp = frequent_items[sjoin(temp.second)];
+          if ((!temp.first.empty() && !temp.second.empty()) && max_supp.size()/other_supp.size() > minconf) {
+            rules.push_back(temp);
+            queue.push_back(temp);
+          }
+        }
+      }
+    }
+    return rules;
+  }
 } //  end namespace
 
 int main(int argc, char** argv) {
@@ -199,13 +247,13 @@ int main(int argc, char** argv) {
   vector<string> maximal_items;
 
   unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
-  unordered_map<string, vector<int>> next_sets = largerFrequentItemsets(frequent_onesets, transactions,
+  unordered_map<string, vector<int>> next_sets = getLargerFreqItemsets(frequent_onesets, transactions,
                                                                         minsup, &maximal_items);
   unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
 
   while (next_sets.size() > 1) {
     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-    next_sets = largerFrequentItemsets(next_sets, transactions, minsup, &maximal_items);
+    next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
   }
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
@@ -218,5 +266,11 @@ int main(int argc, char** argv) {
     printf("%s\n", itemset.c_str());
   }
 
+  vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);
+
+  printf("-------------------Rules------------------\n");
+  for (pair<set<string>, set<string>> rule : rules) {
+    printf("%s -> %s\n", sjoin(rule.first).c_str(), sjoin(rule.second).c_str());
+  }
   return 0;
 }
