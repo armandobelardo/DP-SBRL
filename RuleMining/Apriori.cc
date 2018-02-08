@@ -11,6 +11,7 @@
 using namespace std;
 
 namespace {
+  // Join set with spaces.
   string sjoin(const set<string> &s) {
     stringstream ss;
     int i = 0;
@@ -24,6 +25,7 @@ namespace {
     return ss.str();
   }
 
+  // Join vector with spaces.
   string vjoin(const vector<string> &v) {
     stringstream ss;
     for(int i = 0; i < v.size(); ++i) {
@@ -35,7 +37,7 @@ namespace {
     return ss.str();
   }
 
-  // Split string on spaces
+  // Split string on spaces.
   vector<string> split(string str) {
     stringstream ss(str);
     istream_iterator<string> begin(ss);
@@ -58,13 +60,22 @@ namespace {
 
   unordered_map<string, vector<int>> getLargerItemsets(const unordered_map<string, vector<int>>
                                                        &frequent_items) {
-    // Turn string itemsets into their sets.
+
+  }
+
+  unordered_map<string, vector<int>> largerFrequentItemsets(const unordered_map<string, vector<int>>
+                                                            &frequent_items,
+                                                            const vector<unordered_set<string>>
+                                                            &transactions,
+                                                            float minsup,
+                                                            vector<string> *maximal_items) {
     vector<vector<string>> frequent_sets;
     vector<vector<int>> frequent_supp;
     for (auto itemset_support : frequent_items) {
       frequent_sets.push_back(split(itemset_support.first));
       frequent_supp.push_back(itemset_support.second);
     }
+    vector<bool> maximal(frequent_sets.size(), true);
     int k = frequent_sets[0].size();
 
     unordered_map<string, vector<int>> true_larger_sets;
@@ -86,22 +97,25 @@ namespace {
                                 support.begin());
           support.resize(it-support.begin());
 
-          true_larger_sets[sjoin(itemset)] = support;
+          if (support.size() >= minsup*transactions.size()) {
+            true_larger_sets[sjoin(itemset)] = support;
+            maximal[i] = false;
+            maximal[j] = false;
+          }
         }
+      }
+    }
+
+    for (int i = 0; i < maximal.size(); ++i) {
+      if (maximal[i]) {
+        maximal_items->push_back(vjoin(frequent_sets[i]));
       }
     }
 
     return true_larger_sets;
   }
 
-  unordered_map<string, vector<int>> largerFrequentItemsets(const unordered_map<string, vector<int>> &frequent_items,
-                                                            const vector<unordered_set<string>> &transactions,
-                                                            float minsup) {
-    unordered_map<string, int> counts;
-    unordered_map<string, vector<int>> potential_freq = getLargerItemsets(frequent_items);
 
-    return getFrequent(transactions.size(), minsup, potential_freq);
-  }
 } //  end namespace
 
 int main(int argc, char** argv) {
@@ -182,19 +196,26 @@ int main(int argc, char** argv) {
     }
     in.close();
   }
+  vector<string> maximal_items;
+
   unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
-  unordered_map<string, vector<int>> next_sets = largerFrequentItemsets(frequent_onesets, transactions, minsup);
-  printf("hey\n");
+  unordered_map<string, vector<int>> next_sets = largerFrequentItemsets(frequent_onesets, transactions,
+                                                                        minsup, &maximal_items);
   unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
+
   while (next_sets.size() > 1) {
     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-    next_sets = largerFrequentItemsets(next_sets, transactions, minsup);
+    next_sets = largerFrequentItemsets(next_sets, transactions, minsup, &maximal_items);
   }
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   printf("-------------Frequent Itemsets------------\n");
   for (auto itemset_support : frequent_itemsets) {
     printf("%s\n", itemset_support.first.c_str());
+  }
+  printf("---------Maximal Frequent Itemsets--------\n");
+  for (string itemset : maximal_items) {
+    printf("%s\n", itemset.c_str());
   }
 
   return 0;
