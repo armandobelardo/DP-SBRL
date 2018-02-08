@@ -155,7 +155,7 @@ namespace {
           temp.first.erase(word);
           temp.second.insert(word);
           vector<int> max_supp = frequent_items[maximal], other_supp = frequent_items[sjoin(temp.second)];
-          if ((!temp.first.empty() && !temp.second.empty()) && max_supp.size()/other_supp.size() > minconf) {
+          if ((!temp.first.empty() && !temp.second.empty()) && ((float)max_supp.size())/other_supp.size() > minconf) {
             rules.push_back(temp);
             queue.push_back(temp);
           }
@@ -168,7 +168,7 @@ namespace {
 
 int main(int argc, char** argv) {
   // (confidence pruning)
-  char *filename = (char *)"../Testing/dat1.txt";
+  char *filename = (char *)"../Testing/dat2.txt";
   float minsup = 0.375f;
   float minconf = 0.5f;
   for (int i = 1; i < argc; ++i) {
@@ -259,7 +259,7 @@ int main(int argc, char** argv) {
 
   printf("-------------Frequent Itemsets------------\n");
   for (auto itemset_support : frequent_itemsets) {
-    printf("%s\n", itemset_support.first.c_str());
+    printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
   }
   printf("---------Maximal Frequent Itemsets--------\n");
   for (string itemset : maximal_items) {
