@@ -169,8 +169,8 @@ namespace {
 int main(int argc, char** argv) {
   // (confidence pruning)
   char *filename = (char *)"../Testing/dat2.txt";
-  float minsup = 0.375f;
-  float minconf = 0.5f;
+  float minsup = 0.39f;
+  float minconf = 0.6f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
           if (i + 1 < argc) {
@@ -245,6 +245,7 @@ int main(int argc, char** argv) {
     in.close();
   }
   vector<string> maximal_items;
+  vector<string> freq_sets;
 
   unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
   unordered_map<string, vector<int>> next_sets = getLargerFreqItemsets(frequent_onesets, transactions,
@@ -259,6 +260,7 @@ int main(int argc, char** argv) {
 
   printf("-------------Frequent Itemsets------------\n");
   for (auto itemset_support : frequent_itemsets) {
+    freq_sets.push_back(itemset_support.first);
     printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
   }
   printf("---------Maximal Frequent Itemsets--------\n");
@@ -266,7 +268,8 @@ int main(int argc, char** argv) {
     printf("%s\n", itemset.c_str());
   }
 
-  vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);
+  // vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);
+  vector<pair<set<string>, set<string>>> rules = getRules(freq_sets, frequent_itemsets, minconf);
 
   printf("-------------------Rules------------------\n");
   for (pair<set<string>, set<string>> rule : rules) {
