@@ -10,10 +10,13 @@ class RuleList:
         captures: List of lists of counts captured per label for a specific rule. An entry is
                   captured by the first rule in which antecedents are a subset of the data entry.
     '''
+    # TODO(iamabel): how do we want to start this? Random size and then random antecedents?
+    def random_rule_list(antecedents):
+
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures
-    def runData(self):
+    def run_data(self):
 
     # Swap rules in positions i and j, updating corresponding capture vectors.
     # Naive: just runData again.
@@ -37,6 +40,6 @@ class RuleList:
 
     def __init__(self, dataset):
         self.dataset = dataset
-        self.antecedents = minedAntecedents(dataset)
+        self.antecedents = mined_antecedents(dataset)
         self.rules = random_rule_list(self.antecedents)
         self.captures = [[]]
