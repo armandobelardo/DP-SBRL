@@ -48,7 +48,7 @@ def mcmc_mh(d, A, N, lam, eta):
     return d
 
 def run(A, N, lam, eta):
-    d = random_rule_list(A)
+    d = RuleList(A)
     for _ in range(LOOP_ITERATIONS):
         d = mcmc_mh(d, A, N, lam, eta);
     return d
