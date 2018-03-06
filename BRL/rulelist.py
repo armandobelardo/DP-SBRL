@@ -12,11 +12,22 @@ class RuleList:
     '''
     # TODO(iamabel): how do we want to start this? Random size and then random antecedents?
     def random_rule_list(antecedents):
+        return antecedents
 
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures
     def run_data(self):
+        self.captures = np.zeros(len(self.rules), 2)
+        for transaction in self.dataset:
+            for i, rule in enumerate(self.rules):
+                present = 0
+                # Remove label and note presence
+                if label in transaction:
+                    transaction = np.delete(transaction)
+                    present = 1
+                if transaction in rule:
+                    self.captures[i][present] += 1
 
     # Swap rules in positions i and j, updating corresponding capture vectors.
     # Naive: just runData again.
@@ -38,8 +49,11 @@ class RuleList:
 
         self.runData()
 
-    def __init__(self, dataset):
+    def __init__(self, dataset, label):
+        self.label = label
+
         self.dataset = dataset
         self.antecedents = mined_antecedents(dataset)
+
         self.rules = random_rule_list(self.antecedents)
         self.captures = [[]]

@@ -1,11 +1,12 @@
 import scipy as sp
 import numpy as np
+import math
 
 LOOP_ITERATIONS = 10000
 
 # Score outcome y with capture vector N and preference vector alpha.
 # Ensure alpha reflects the multinomial representing the potential labels.
-def likelihood(y, N, alpha=[1,1]):
+def likelihood(N, alpha=[1,1]):
     fit = 1
     for capture in N:
         numerator = 1
@@ -15,26 +16,48 @@ def likelihood(y, N, alpha=[1,1]):
     return fit
 
 def antecedent_length(len_j, A_after_j, eta):
-    return 1
+    denominator = 0
+    for k in A_after_j:
+        denominator += eta**len(k)/math.factorial(len(k))
+
+    return (eta**len_j/math.factorial(len_j))/denominator
 
 def which_antecedents():
     return 1
 
-def rules_in_list(m, len_A, lambda):
-    return 1
+def rules_list_length(m, len_A, lam):
+    denominator = 0
+    for j in range(len_A):
+        denominator += lam**j/math.factorial(j)
+
+    return (lam**m/math.factorial(m))/denominator
 
 # Score rule list d with antecedent list d.antecedents, and hyperparameters lam(bda) (desired rule
 # list length) and eta (desired number of conditions per rule).
 def prior(d, lam, eta):
     antecedent_product = 1
-    for i in range(len(d.antecedents)):
-        antecedent_product *= antecedent_length(len(d.antecedents[i]), d.antecedents[i:], eta)*which_antecedents()
-    return antecedent_product * rules_in_list(len(d), len(d.antecedents), lam)
+    for j in range(len(d.rules)):
+        antecedent_product *=
+            antecedent_length(len(d.rules[j]), d.rules[:j], eta)*which_antecedents()
+    return antecedent_product * rules_list_length(len(d.rules), len(d.antecedents), lam)
 
 def score(d, N, lam, eta):
-    # TODO(iamabel): Figure out what y is to score it.
-    # return prior(d, lam, eta)*likelihood(y, N)
-    return 1
+    return prior(d, lam, eta)*likelihood(N)
+
+# Uniformly at random select the rule list mutation. Then uniformly at random select the antecedents
+# to move around and their new locations.
+def proposal(d):
+    alteration = np.random.randint(1,4)
+
+    if alteration == 1:   # add
+        # TODO: Get antecedent at random and get
+        d.add(, i)
+    elif alteration == 2: # delete
+        # TODO: Get thing to delete at random
+        d.delete(i)
+    else:                 # swap
+        # TODO: Get two locations to swap at random
+        d.swap(i, j)
 
 
 # Run Metropolis-Hastings MCMC, get new rule list, score, keep or reject based on random alpha.
