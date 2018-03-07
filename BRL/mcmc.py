@@ -47,16 +47,22 @@ def score(d, N, lam, eta):
 # Uniformly at random select the rule list mutation. Then uniformly at random select the antecedents
 # to move around and their new locations.
 def proposal(d):
-    alteration = np.random.randint(1,4)
+    alteration = np.random.randint(3)
 
-    if alteration == 1:   # add
-        # TODO: Get antecedent at random and get
-        d.add(, i)
-    elif alteration == 2: # delete
-        # TODO: Get thing to delete at random
+    if alteration == 0:   # add
+        # Get antecedent at random and get a random spot to insert it into.
+        i = np.random.randint(len(d.rules))
+        j = np.random.randint(len(d.unused))
+        d.add(d.unused[j], i, j)
+
+    elif alteration == 1: # delete
+        # Get rule to delete at random.
+        i = np.random.randint(len(d.rules))
         d.delete(i)
+
     else:                 # swap
-        # TODO: Get two locations to swap at random
+        # Get two locations to swap at random.
+        i, j = np.random.randint(len(d.rules), size=2)
         d.swap(i, j)
 
 
