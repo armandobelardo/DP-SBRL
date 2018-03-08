@@ -5,6 +5,7 @@ class RuleList:
     '''
     Should contain an antecedent list and capture vector per rule.
     Instance Variables:
+        label:
         dataset: List of lists corresponding to the data entries (includes label).
         rules: subset of antecedents, representing true rule list. Starts random.
         antecedents: Lists of lists corresponding to premined antecedents for rules.
@@ -12,11 +13,24 @@ class RuleList:
         captures: List of lists of counts captured per label for a specific rule. An entry is
                   captured by the first rule in which antecedents are a subset of the data entry.
     '''
-    # TODO(iamabel): how do we want to start this? Random size and then random antecedents?
-    def random_rule_list(antecedents):
-        # Would set unused if it weren't all antecedents.
-        return antecedents
+    # # TODO(iamabel): how do we want to start this? Random size and then random antecedents?
+    # def random_rule_list(self):
+    #     # Would set unused if it weren't all antecedents.
+    #     return self.antecedents
 
+    # TODO(iamabel): There's probably a better way to do this.
+    def copy(self):
+        d_c = RuleList()
+
+        d_c.label = self.label[:]
+        d_c.dataset = self.dataset[:]
+        d_c.antecedents = self.antecedents[:]
+
+        d_c.rules = self.rules[:]
+        d_c.unused = self.unused[:]
+        d_c.captures = self.captures[:]
+
+        return d_c
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures
@@ -49,12 +63,14 @@ class RuleList:
 
         self.runData()
 
-    def __init__(self, dataset, label):
+    def __init__(self, dataset=[], label=""):
         self.label = label
 
         self.dataset = dataset
-        self.antecedents = mined_antecedents(dataset)
+        # TODO(iamabel): integrate antecedent miner, want frequent itemsets without label.
+        # self.antecedents = mined_antecedents(dataset, label)
+        self.antecedents = []
 
-        self.rules = random_rule_list(self.antecedents)
-        self.unused = [[]]
-        self.captures = [[]]
+        self.rules = []
+        self.unused = []
+        self.captures = []
