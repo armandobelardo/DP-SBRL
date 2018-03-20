@@ -69,14 +69,24 @@ def proposal(d):
         i, j = np.random.randint(len(d.rules), size=2)
         d_c.swap(i, j)
 
-    return d_c
+    return d_c, alteration
+
+def Q(alteration, given):
+    if alteration == 0:
+        return 1/((len(given.antecedents)-len(given.rules))*(len(given.rules)+1))
+    elif alteration == 1:
+        return 1/len(given.rules)
+    elif alteration == 2:
+        return 1/(len(given.rules)*(len(given.rules)-1))
 
 # Run Metropolis-Hastings MCMC, get new rule list, score, keep or reject based on random alpha.
 def mcmc_mh(d, lam, eta):
-    new_rule_list = proposal(d)
-    alpha = np.random.uniform()
+    new_rule_list, alteration = proposal(d)
+    alpha = (score(new_rule_list, lam, eta)/score(d, lam, eta)) * Q_factor
+    Q_factor = Q(alteration, d) / Q(alteration, new_rule_list)
 
-    if score(new_rule_list, lam, eta)/score(d, lam, eta) <= alpha: # Accept new rule list
+    # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha
+    if alpha >= 1 or np.random.uniform() <= alpha:
         d = new_rule_list
 
     return d

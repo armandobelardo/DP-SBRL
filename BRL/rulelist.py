@@ -22,9 +22,9 @@ class RuleList:
     def copy(self):
         d_c = RuleList()
 
-        d_c.label = self.label[:]
-        d_c.dataset = self.dataset[:]
-        d_c.antecedents = self.antecedents[:]
+        d_c.label = self.label
+        d_c.dataset = self.dataset
+        d_c.antecedents = self.antecedents
 
         d_c.rules = self.rules[:]
         d_c.unused = self.unused[:]
@@ -40,6 +40,7 @@ class RuleList:
             for i, rule in enumerate(self.rules):
                 if rule in transaction:
                     self.captures[i][label in transaction] += 1
+                    break
 
     # Swap rules in positions i and j, updating corresponding capture vectors.
     # Naive: just runData again.
