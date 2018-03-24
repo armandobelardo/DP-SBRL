@@ -1,4 +1,6 @@
 import numpy as np
+from data import *
+
 
 class RuleList:
     # TODO(iamabel): Remove antecedents and make it work with only unused and rules.
@@ -64,13 +66,13 @@ class RuleList:
 
         self.runData()
 
-    def __init__(self, dataset=[], label=""):
+    def __init__(self, antecedents="", dataset="", label=""):
         self.label = label
 
-        self.dataset = dataset
+        self.dataset = readData(dataset)
         # TODO(iamabel): integrate antecedent miner, want frequent itemsets without label.
         # self.antecedents = mined_antecedents(dataset, label)
-        self.antecedents = []
+        self.antecedents = readFIM(antecedents)
 
         self.rules = []
         self.unused = []
