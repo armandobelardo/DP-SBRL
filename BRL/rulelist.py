@@ -34,10 +34,14 @@ class RuleList:
 
         return d_c
 
+    def printNeat(self):
+        for rule in self.rules:
+            print(' '.join(rule)+'\n')
+
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures
     def run_data(self):
-        self.captures = np.zeros(len(self.rules), 2)
+        self.captures = np.zeros((len(self.rules), 2))
         for transaction in self.dataset:
             for i, rule in enumerate(self.rules):
                 if rule in transaction:
@@ -49,14 +53,14 @@ class RuleList:
     def swap(self, i, j):
         self.rules[i], self.rules[j] = self.rules[j], self.rules[i]
 
-        self.runData()
+        self.run_data()
 
     # Delete rule i, updating corresponding capture vectors. Naive: just runData again.
     def delete(self, i):
-        np.insert(self.unused, self.rules[i])
+        np.append(self.unused, self.rules[i])
         self.rules = np.delete(self.rules, i)
 
-        self.runData()
+        self.run_data()
 
     # Add the antecedent to position i, updating corresponding capture vectors.
     # Naive: just runData again.
@@ -64,9 +68,9 @@ class RuleList:
         self.unused = np.delete(self.unused, unused_i)
         np.insert(self.rules, antecedent, i)
 
-        self.runData()
+        self.run_data()
 
-    def __init__(self, antecedents="../Data/fim_1.txt", dataset="../Data/dat2_test.txt", label=""):
+    def __init__(self, antecedents="../Data/fim_1.txt", dataset="../Data/dat2_test.txt", label="diapers"):
         self.label = label
 
         self.dataset = readData(dataset)
@@ -74,6 +78,7 @@ class RuleList:
         # self.antecedents = mined_antecedents(dataset, label)
         self.antecedents = readFIM(antecedents)
 
-        self.rules = []
-        self.unused = []
-        self.captures = []
+        self.rules = self.antecedents[:]
+        self.unused = [[]]
+        self.captures = [[]]
+        self.run_data()
