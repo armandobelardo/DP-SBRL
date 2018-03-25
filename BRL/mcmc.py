@@ -54,20 +54,20 @@ def score(d, lam, eta):
 def proposal(d):
     alteration = np.random.randint(3)
 
-    if alteration == 0 and len(d.unused) > 0:  # add
+    if alteration == 0 and len(d.unused) > 1:  # add
         d_c = d.copy()
+
         # Get antecedent at random and get a random spot to insert it into.
         i = np.random.randint(len(d.rules))
-        print(i)
         j = np.random.randint(len(d.unused))
-        print(j)
-        d_c.add(d.unused[j], i, j)
+        d_c.add(i, j)
         return d_c, alteration
     elif alteration == 0: # unsuccessful add.
         return d, -1
 
-    if alteration == 1 and (len(d.rules) > 0 and len(d.rules[0]) > 0): # delete
+    if alteration == 1 and len(d.rules) > 1: # delete, no point in trying a rule list of length 0.
         d_c = d.copy()
+
         # Get rule to delete at random.
         i = np.random.randint(len(d.rules))
         d_c.delete(i)
@@ -75,8 +75,9 @@ def proposal(d):
     elif alteration == 1: # unsuccessful delete.
         return d, -1
 
-    if alteration == 2 and (len(d.rules) > 0 and len(d.rules[0]) > 0): # swap
+    if alteration == 2 and len(d.rules) > 1: # swap, no point in swapping one element with itself.
         d_c = d.copy()
+        
         # Get two locations to swap at random.
         i, j = np.random.randint(len(d.rules), size=2)
         d_c.swap(i, j)
@@ -86,8 +87,7 @@ def proposal(d):
 
 
 def Q(given, alteration):
-    print("alt:",alteration)
-    print("rules:",len(given.rules))
+    # TODO(iamabel): This makes us not be able to add to make a list of full size, we'd div by 0.
     if alteration == 0:
         return 1.0/((len(given.antecedents)-len(given.rules))*(len(given.rules)+1))
     elif alteration == 1:
