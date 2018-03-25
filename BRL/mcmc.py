@@ -92,6 +92,8 @@ def mcmc_mh(d, lam, eta):
 
     return d
 
+# Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
+# per rule, respectively.
 def run(antecedents, dataset, label, lam, eta):
     d = RuleList(antecedents, dataset, label)
     for _ in range(LOOP_ITERATIONS):
@@ -99,7 +101,14 @@ def run(antecedents, dataset, label, lam, eta):
             d = mcmc_mh(d, lam, eta);
     return d
 
+def runDefault(label, lam, eta):
+    d = RuleList(label)
+    for _ in range(LOOP_ITERATIONS):
+        if len(d.rules) > 0:
+            d = mcmc_mh(d, lam, eta);
+    return d
+
 def main():
-    run([[]],[[]], "diapers", 5, 4)
+    runDefault("diapers", 5, 4)
 
 main()

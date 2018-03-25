@@ -1,0 +1,17 @@
+beer diapers milk
+cola diapers milk
+bread diapers milk
+beer bread diapers
+beer
+diapers
+cola
+bread milk
+beer milk
+milk
+beer diapers
+cola milk
+cola diapers
+beer bread
+bread diapers
+bread
+diapers milk

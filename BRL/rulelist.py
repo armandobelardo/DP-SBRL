@@ -66,7 +66,7 @@ class RuleList:
 
         self.runData()
 
-    def __init__(self, antecedents="", dataset="", label=""):
+    def __init__(self, antecedents="../Data/fim_1.txt", dataset="../Data/dat2_test.txt", label=""):
         self.label = label
 
         self.dataset = readData(dataset)
