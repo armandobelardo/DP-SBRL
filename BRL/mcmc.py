@@ -77,7 +77,7 @@ def proposal(d):
 
     if alteration == 2 and len(d.rules) > 1: # swap, no point in swapping one element with itself.
         d_c = d.copy()
-        
+
         # Get two locations to swap at random.
         i, j = np.random.randint(len(d.rules), size=2)
         d_c.swap(i, j)
@@ -113,18 +113,25 @@ def mcmc_mh(d, lam, eta):
 # per rule, respectively.
 def run(antecedents, dataset, label, lam, eta):
     d = RuleList(antecedents, dataset, label)
+    best = d
     for _ in range(LOOP_ITERATIONS):
-        d = mcmc_mh(d, lam, eta);
-    return d
+        d = mcmc_mh(d, lam, eta)
+        # Note that we will check every new rule list produced that has a better score than the
+        # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
+        # with probability alpha, so we cache the best rule list.
+        best = d if score(d, lam, eta) > score(best, lam, eta) else best
+    return best
 
 def runDefault(lam, eta):
     d = RuleList()
+    best = d
     for _ in range(LOOP_ITERATIONS):
-        d = mcmc_mh(d, lam, eta);
-    return d
+        d = mcmc_mh(d, lam, eta)
+        best = d if score(d, lam, eta) > score(best, lam, eta) else best
+    return best
 
 def main():
-    d = runDefault(5.0, 2.0)
+    d = runDefault(5.0, 3.0)
     d.printNeat()
 
 main()

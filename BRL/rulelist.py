@@ -35,8 +35,9 @@ class RuleList:
         return d_c
 
     def printNeat(self):
-        for rule in self.rules:
-            print(' '.join(rule))
+        for i in range(len(self.rules)):
+            probability = 0.0 if sum(self.captures[i]) == 0 else float(self.captures[i][1])/sum(self.captures[i])
+            print("if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(probability))
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures
@@ -44,7 +45,7 @@ class RuleList:
         self.captures = np.zeros((len(self.rules), 2)).tolist()
         for transaction in self.dataset:
             for i, rule in enumerate(self.rules):
-                if rule in transaction:
+                if set(rule).issubset(transaction):
                     self.captures[i][self.label in transaction] += 1
                     break
 
