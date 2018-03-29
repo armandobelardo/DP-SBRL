@@ -97,17 +97,19 @@ def Q(given, alteration):
 
 # Run Metropolis-Hastings MCMC, get new rule list, score, keep or reject based on random alpha.
 def mcmc_mh(d, lam, eta):
+    better = False    # Indicate that the new rule list is better than the previous
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
-        return d
+        return d, better
 
     Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
     alpha = (score(new_rule_list, lam, eta)/score(d, lam, eta)) * Q_factor
     # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha.
     if alpha >= 1 or np.random.uniform() <= alpha:
         d = new_rule_list
-
-    return d
+        if alpha >= 1:
+            better = True
+    return d, better
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
 # per rule, respectively.
@@ -115,19 +117,22 @@ def run(antecedents, dataset, label, lam, eta):
     d = RuleList(antecedents, dataset, label)
     best = d
     for _ in range(LOOP_ITERATIONS):
-        d = mcmc_mh(d, lam, eta)
+        d, better = mcmc_mh(d, lam, eta)
         # Note that we will check every new rule list produced that has a better score than the
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
-        best = d if score(d, lam, eta) > score(best, lam, eta) else best
+        best = d if better else best
     return best
 
 def runDefault(lam, eta):
     d = RuleList()
     best = d
     for _ in range(LOOP_ITERATIONS):
-        d = mcmc_mh(d, lam, eta)
-        best = d if score(d, lam, eta) > score(best, lam, eta) else best
+        d, better = mcmc_mh(d, lam, eta)
+        # Note that we will check every new rule list produced that has a better score than the
+        # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
+        # with probability alpha, so we cache the best rule list.
+        best = d if better else best
     return best
 
 def main():
