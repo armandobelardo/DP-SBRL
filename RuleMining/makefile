@@ -1,16 +1,19 @@
 CXX=g++-7
 CXXFLAGS=-g -std=c++11
-BIN=apriori
 
 SRC=$(wildcard *.cc)
 OBJ=$(SRC:%.cc=%.o)
 
-all: $(OBJ)
-	$(CXX) $(CXXFLAGS) -o $(BIN) $^
+run: $(OBJ)
+	$(CXX) $(CXXFLAGS) -o apriori $^
+
+test: $(OBJ)
+	$(CXX) $(CXXFLAGS) -o apriori_test $^
 
 %.o: %.c
 	$(CXX) $(CXXFLAGS) $@ -c $<
 
 clean:
 	rm -f *.o
-	rm $(BIN)
+	rm apriori_test
+	rm apriori
