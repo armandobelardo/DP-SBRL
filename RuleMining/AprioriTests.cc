@@ -13,16 +13,21 @@ bool getFrequentTest() {
 }
 
 bool getLargerFreqItemsetsTest() {
-  vector<unordered_set<string>> transactions = {{"hey", "there", "this"}, {"is", "hey", "there"},
-                                                {"hey", "there", "this", "is"}, {"hey", "there", "is", "great"},
+  // Notice that there is a frequent 4-set {hey there is this}
+  vector<unordered_set<string>> transactions = {{"hey", "there", "this", "is"}, {"is", "hey", "there"},
+                                                {"hey", "there", "this", "is"}, {"hey", "there", "this", "is", "great"},
                                                 {"there", "is", "this"}};
   vector<string> dontcare;
 
   unordered_map<string, vector<int>> frequent_onesets = {{"hey",{0,1,2,3}}, {"there",{0,1,2,3,4}},
-                                                         {"this",{0,2,4}}, {"is",{1,2,3,4}}};
-  unordered_map<string, vector<int>> ex_frequent_twosets =  {{"hey there",{0,1,2,3}}, {"hey is",{1,2,3}},
-                                                             {"there this",{0,2,4}}, {"is there",{1,2,3,4}}};
-  unordered_map<string, vector<int>> ex_frequent_threesets = {{"hey is there",{1,2,3}}};
+                                                         {"this",{0,2,3,4}}, {"is",{0,1,2,3,4}}};
+  unordered_map<string, vector<int>> ex_frequent_twosets =  {{"hey there",{0,1,2,3}}, {"hey is",{0,1,2,3}},
+                                                             {"there this",{0,2,3,4}}, {"is there",{0,1,2,3,4}},
+                                                             {"hey this",{0,2,3}}, {"is this",{0,2,3,4}}};
+  unordered_map<string, vector<int>> ex_frequent_threesets = {{"hey is there",{0,1,2,3}},
+                                                              {"hey there this",{0,2,3}},
+                                                              {"hey is this",{0,2,3}},
+                                                              {"is there this",{0,2,3,4}}};
 
   unordered_map<string, vector<int>> frequent_twosets = getLargerFreqItemsets(frequent_onesets,
                                                                   transactions, 3.0/5.0, &dontcare);
