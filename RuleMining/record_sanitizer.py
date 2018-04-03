@@ -25,7 +25,8 @@ def mushrooms(fname):
         shroom_deets = shroom.strip().split(',')
         for i in range(len(cats)):
             if i == 0 or i == 4:
-                transaction.append(cats[i])
+                if shroom_deets[i] == 'e' or shroom_deets[i] == 't':
+                    transaction.append(cats[i])
             else:
                 transaction.append(cats[i]+ "=" + shroom_guide[i][shroom_deets[i]])
         shroom_clean.write(" ".join(transaction)+"\n")
