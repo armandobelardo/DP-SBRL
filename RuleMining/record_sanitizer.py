@@ -40,18 +40,18 @@ def sani_mushrooms():
 def sani_titanic():
     cats = ["Survived", "Pclass", "Sex", "Age", "Cabin"]
     passengers_clean = open("../Data/kaggle_titanic_clean_train.txt", "w+")
-    count = 0
     with open('../Data/kaggle-titanic.csv') as csvfile:
         reader = csv.DictReader(csvfile)
         for row in reader:
-            junk = False
             transaction = []
+            # Not particularly useful to us if we can't get details on survival.
+            if row["Survived"] == '':
+                continue
             for cat in cats:
                 if row[cat] == '':
-                    junk = True
-                    break
+                    continue
                 if cat == "Age":
-                    age = int(row[cat])
+                    age = int(float(row[cat]))
                     # We'll arbitrarily choose 4 age buckets: -12, 13-21, 22-40, 41+
                     if age <= 12:
                         transaction.append("Age<13")
@@ -68,6 +68,5 @@ def sani_titanic():
                     transaction.append("Cabin="+row[cat][0])
                 else:
                     transaction.append(cat+"="+row[cat])
-            if not junk:
-                passengers_clean.write(" ".join(transaction)+"\n")
+            passengers_clean.write(" ".join(transaction)+"\n")
     passengers_clean.close()

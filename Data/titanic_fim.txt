@@ -1,0 +1,17 @@
+Age=22-40 Pclass=3 Sex=male
+Pclass=3 Sex=female
+Age=22-40 Pclass=3
+Pclass=3 Sex=male
+Age=22-40 Survived
+Age=22-40 Sex=male
+Age=13-21
+Pclass=1 Survived
+Pclass=2
+Sex=female Survived
+Pclass=1
+Age=22-40
+Sex=female
+Age>40
+Pclass=3
+Survived
+Sex=male

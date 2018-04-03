@@ -1,0 +1,51 @@
+gill-attachment=free gill-spacing=close ring-number=one veil-color=white veil-type=partial
+gill-attachment=free ring-number=one veil-color=white veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one
+gill-attachment=free gill-spacing=close veil-color=white
+gill-size=broad veil-color=white veil-type=partial
+gill-attachment=free ring-number=one veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one veil-type=partial
+gill-spacing=close ring-number=one veil-color=white
+gill-attachment=free gill-spacing=close veil-type=partial
+gill-spacing=close veil-color=white veil-type=partial
+stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one veil-color=white
+gill-spacing=close ring-number=one veil-type=partial
+veil-type=partial
+stalk-surface-above-ring=smooth
+gill-attachment=free stalk-surface-above-ring=smooth
+gill-spacing=close ring-number=one veil-color=white veil-type=partial
+gill-attachment=free
+gill-attachment=free veil-type=partial
+veil-color=white
+gill-attachment=free gill-size=broad veil-color=white veil-type=partial
+gill-size=broad veil-color=white
+gill-attachment=free gill-spacing=close veil-color=white veil-type=partial
+gill-size=broad ring-number=one veil-type=partial
+stalk-surface-below-ring=smooth
+gill-attachment=free gill-size=broad
+stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one
+gill-attachment=free gill-size=broad veil-color=white
+ring-number=one veil-type=partial
+ring-number=one
+gill-size=broad ring-number=one
+gill-attachment=free veil-color=white veil-type=partial
+ring-number=one veil-color=white
+gill-attachment=free stalk-surface-above-ring=smooth veil-color=white
+veil-color=white veil-type=partial
+ring-number=one veil-color=white veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth veil-type=partial
+gill-size=broad veil-type=partial
+gill-size=broad
+stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free ring-number=one veil-type=partial
+gill-spacing=close ring-number=one
+gill-attachment=free veil-color=white
+gill-spacing=close veil-color=white
+gill-attachment=free gill-spacing=close
+gill-spacing=close veil-type=partial
+gill-spacing=close
+stalk-surface-below-ring=smooth veil-type=partial

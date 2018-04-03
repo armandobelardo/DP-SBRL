@@ -170,8 +170,8 @@ namespace {
 
 int main(int argc, char** argv) {
   // (confidence pruning)
-  char *filename = (char *)"../Data/skewed_data.txt";
-  float minsup = 0.39f;
+  char *filename = (char *)"../Data/UCI_shroom_clean.txt";
+  float minsup = 0.59f;
   float minconf = 0.6f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
@@ -261,17 +261,17 @@ int main(int argc, char** argv) {
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   {
-    ofstream outputFile("../Data/skewed_fim.txt");
+    ofstream outputFile("../Data/shroom_fim.txt");
     printf("-------------Frequent Itemsets------------\n");
     for (auto itemset_support : frequent_itemsets) {
       // freq_sets.push_back(itemset_support.first);
       outputFile << itemset_support.first.c_str() << '\n';
-      printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
+      // printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
     }
-    printf("---------Maximal Frequent Itemsets--------\n");
-    for (string itemset : maximal_items) {
-      printf("%s\n", itemset.c_str());
-    }
+    // printf("---------Maximal Frequent Itemsets--------\n");
+    // for (string itemset : maximal_items) {
+    //   printf("%s\n", itemset.c_str());
+    // }
     outputFile.close();
   }
   // // vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);

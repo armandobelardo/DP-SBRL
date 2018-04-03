@@ -137,5 +137,3 @@ def runDefault(lam, eta):
 def main():
     d = runDefault(5.0, 3.0)
     d.printNeat()
-
-main()
