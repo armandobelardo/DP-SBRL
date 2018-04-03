@@ -1,7 +1,7 @@
 CXX=g++-7
 CXXFLAGS=-g -std=c++11
 
-BIN=apriori
+BIN=apriori_test
 SRC=$(wildcard *.cc)
 OBJ=$(SRC:%.cc=%.o)
 

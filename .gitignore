@@ -32,4 +32,4 @@
 *.app
 
 # Debug Symbols
-*.dSYM
+*.dSYM*

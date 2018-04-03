@@ -168,119 +168,119 @@ namespace {
   }
 } //  end namespace
 
-// int main(int argc, char** argv) {
-//   // (confidence pruning)
-//   char *filename = (char *)"../Data/dat2_test.txt";
-//   float minsup = 0.39f;
-//   float minconf = 0.6f;
-//   for (int i = 1; i < argc; ++i) {
-//       if (string(argv[i]) == "--file") {
-//           if (i + 1 < argc) {
-//               filename = argv[++i];
-//           } else { // Trial flag called but unspecified
-//                 cerr << "--file option requires one argument." << endl;
-//               return 1;
-//           }
-//       } else if (string(argv[i]) == "--minsup") {
-//         if (i + 1 < argc) {
-//             minsup = atof(argv[++i]);
-//         } else { // Graph flag called but unspecified
-//               cerr << "--minsup option requires one argument." << endl;
-//             return 1;
-//         }
-//       } else if (string(argv[i]) == "--minconf") {
-//         if (i + 1 < argc) {
-//             minconf = atof(argv[++i]);
-//         } else { // Graph flag called but unspecified
-//               cerr << "--minconf option requires one argument." << endl;
-//             return 1;
-//         }
-//       }
-//   }
-//
-//   // Items, counts, 'transactions'.
-//   unordered_map<string, vector<int>> oneset_supports;
-//   vector<unordered_set<string>> transactions;
-//   // Need a standardized delimiter that distinguishes 'items'.
-//   string delim = " ";
-//   {
-//     ifstream in(filename);
-//
-//     if (!in.good()) {
-//         fprintf(stderr, "Can't open transactions file\n");
-//         return -1;
-//     }
-//
-//     string transaction;
-//     int line = 1;
-//     while (getline(in, transaction)) {
-//       int start = 0, end = transaction.find(delim);
-//       unordered_set<string> items_curr;
-//       string item;
-//
-//       while (end != string::npos) {
-//         // Note if element exists, this increments, if it does not it is init
-//         // to 0 then incremented to 1.
-//         item = transaction.substr(start, end - start);
-//
-//         // Ensure uniqueness per transaction
-//         // Sets maintain uniquesness, however we want to count elements as well, this allows us to
-//         // limit iterations (we won't have to iterate through the set after).
-//         if (items_curr.find(item) == items_curr.end()) {
-//           oneset_supports[item].push_back(line);
-//           items_curr.insert(item);
-//         }
-//
-//         start = end + 1;
-//         end = transaction.find(delim, start);
-//       }
-//
-//       item = transaction.substr(start);
-//       if (items_curr.find(item) == items_curr.end()) {
-//         oneset_supports[item].push_back(line);
-//         items_curr.insert(item);
-//       }
-//
-//       transactions.push_back(items_curr);
-//       line++;
-//     }
-//     in.close();
-//   }
-//   vector<string> maximal_items;
-//   // vector<string> freq_sets;
-//
-//   unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
-//   unordered_map<string, vector<int>> next_sets = getLargerFreqItemsets(frequent_onesets, transactions,
-//                                                                         minsup, &maximal_items);
-//   unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
-//
-//   while (next_sets.size() > 1) {
-//     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-//     next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
-//   }
-//   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-//
-//   {
-//     ofstream outputFile("../Data/fim_1.txt");
-//     printf("-------------Frequent Itemsets------------\n");
-//     for (auto itemset_support : frequent_itemsets) {
-//       // freq_sets.push_back(itemset_support.first);
-//       outputFile << itemset_support.first.c_str() << '\n';
-//       printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
-//     }
-//     printf("---------Maximal Frequent Itemsets--------\n");
-//     for (string itemset : maximal_items) {
-//       printf("%s\n", itemset.c_str());
-//     }
-//     outputFile.close();
-//   }
-//   // // vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);
-//   // vector<pair<set<string>, set<string>>> rules = getRules(freq_sets, frequent_itemsets, minconf);
-//   //
-//   // printf("-------------------Rules------------------\n");
-//   // for (pair<set<string>, set<string>> rule : rules) {
-//   //   printf("%s -> %s\n", sjoin(rule.first).c_str(), sjoin(rule.second).c_str());
-//   // }
-//
-//   return 0;
-// }
+int main(int argc, char** argv) {
+  // (confidence pruning)
+  char *filename = (char *)"../Data/skewed_data.txt";
+  float minsup = 0.39f;
+  float minconf = 0.6f;
+  for (int i = 1; i < argc; ++i) {
+      if (string(argv[i]) == "--file") {
+          if (i + 1 < argc) {
+              filename = argv[++i];
+          } else { // Trial flag called but unspecified
+                cerr << "--file option requires one argument." << endl;
+              return 1;
+          }
+      } else if (string(argv[i]) == "--minsup") {
+        if (i + 1 < argc) {
+            minsup = atof(argv[++i]);
+        } else { // Graph flag called but unspecified
+              cerr << "--minsup option requires one argument." << endl;
+            return 1;
+        }
+      } else if (string(argv[i]) == "--minconf") {
+        if (i + 1 < argc) {
+            minconf = atof(argv[++i]);
+        } else { // Graph flag called but unspecified
+              cerr << "--minconf option requires one argument." << endl;
+            return 1;
+        }
+      }
+  }
+
+  // Items, counts, 'transactions'.
+  unordered_map<string, vector<int>> oneset_supports;
+  vector<unordered_set<string>> transactions;
+  // Need a standardized delimiter that distinguishes 'items'.
+  string delim = " ";
+  {
+    ifstream in(filename);
+
+    if (!in.good()) {
+        fprintf(stderr, "Can't open transactions file\n");
+        return -1;
+    }
+
+    string transaction;
+    int line = 1;
+    while (getline(in, transaction)) {
+      int start = 0, end = transaction.find(delim);
+      unordered_set<string> items_curr;
+      string item;
+
+      while (end != string::npos) {
+        // Note if element exists, this increments, if it does not it is init
+        // to 0 then incremented to 1.
+        item = transaction.substr(start, end - start);
+
+        // Ensure uniqueness per transaction
+        // Sets maintain uniquesness, however we want to count elements as well, this allows us to
+        // limit iterations (we won't have to iterate through the set after).
+        if (items_curr.find(item) == items_curr.end()) {
+          oneset_supports[item].push_back(line);
+          items_curr.insert(item);
+        }
+
+        start = end + 1;
+        end = transaction.find(delim, start);
+      }
+
+      item = transaction.substr(start);
+      if (items_curr.find(item) == items_curr.end()) {
+        oneset_supports[item].push_back(line);
+        items_curr.insert(item);
+      }
+
+      transactions.push_back(items_curr);
+      line++;
+    }
+    in.close();
+  }
+  vector<string> maximal_items;
+  // vector<string> freq_sets;
+
+  unordered_map<string, vector<int>> frequent_onesets = getFrequent(transactions.size(), minsup, oneset_supports);
+  unordered_map<string, vector<int>> next_sets = getLargerFreqItemsets(frequent_onesets, transactions,
+                                                                        minsup, &maximal_items);
+  unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
+
+  while (next_sets.size() > 1) {
+    frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+    next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
+  }
+  frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+
+  {
+    ofstream outputFile("../Data/skewed_fim.txt");
+    printf("-------------Frequent Itemsets------------\n");
+    for (auto itemset_support : frequent_itemsets) {
+      // freq_sets.push_back(itemset_support.first);
+      outputFile << itemset_support.first.c_str() << '\n';
+      printf("%s, supp: %d\n", itemset_support.first.c_str(), itemset_support.second.size());
+    }
+    printf("---------Maximal Frequent Itemsets--------\n");
+    for (string itemset : maximal_items) {
+      printf("%s\n", itemset.c_str());
+    }
+    outputFile.close();
+  }
+  // // vector<pair<set<string>, set<string>>> rules = getRules(maximal_items, frequent_itemsets, minconf);
+  // vector<pair<set<string>, set<string>>> rules = getRules(freq_sets, frequent_itemsets, minconf);
+  //
+  // printf("-------------------Rules------------------\n");
+  // for (pair<set<string>, set<string>> rule : rules) {
+  //   printf("%s -> %s\n", sjoin(rule.first).c_str(), sjoin(rule.second).c_str());
+  // }
+
+  return 0;
+}

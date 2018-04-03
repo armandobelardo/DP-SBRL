@@ -50,8 +50,14 @@ def mathmaticalTests():
         print("prior function failed, expect: " + str(ex_prior) + " got: " + str(output_prior))
 
     return all_passed
+def skewedMCMC():
+    d1 = run("../Data/skewed_fim.txt", "../Data/skewed_data.txt", "hi", 1.0, 1.0, 100000)
+    d2 = run("../Data/skewed_fim.txt", "../Data/skewed_data.txt", "hi", 1.0, 1.0, 100000)
+    return d1.rules == d2.rules
 
 def main():
     print("init Rule List built correctly? " + str(initRLTest()))
     print("All Mathematical Tests Passed? " + str(mathmaticalTests()))
+    print("Did the MCMC work? " + str(skewedMCMC()))
+    
 main()
