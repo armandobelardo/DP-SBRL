@@ -33,3 +33,6 @@
 
 # Debug Symbols
 *.dSYM*
+
+# Not my data
+*UCI*
