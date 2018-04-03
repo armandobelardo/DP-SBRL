@@ -1,4 +1,4 @@
-#include "Apriori.cc"
+#include "../Tests/Apriori.cc"
 
 using namespace std;
 

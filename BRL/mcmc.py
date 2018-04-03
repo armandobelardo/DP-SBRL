@@ -25,6 +25,7 @@ def which_antecedents():
 
 def rules_list_length(m, len_A, lam):
     denominator = 0.0
+    lam = float(lam)    # Ensure float when critical
     for j in range(len_A+1):
         denominator += lam**j/math.factorial(j)
 
@@ -32,6 +33,7 @@ def rules_list_length(m, len_A, lam):
 
 def antecedent_length(len_j, A_after_j, eta):
     denominator = 0.0
+    eta = float(eta)    # Ensure float when critical
     for k in A_after_j:
         # TODO(iamabel): The paper is unclear here with what exactly R_{j-1} is
         denominator += eta**len(k)/math.factorial(len(k))
@@ -112,11 +114,11 @@ def mcmc_mh(d, lam, eta):
     return d, better
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
-# per rule, respectively.
-def run(antecedents, dataset, label, lam, eta):
+# per rule, respectively. These must be floats.
+def run(antecedents, dataset, label, lam, eta, loops):
     d = RuleList(antecedents, dataset, label)
     best = d
-    for _ in range(LOOP_ITERATIONS):
+    for _ in range(loops):
         d, better = mcmc_mh(d, lam, eta)
         # Note that we will check every new rule list produced that has a better score than the
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
@@ -129,9 +131,6 @@ def runDefault(lam, eta):
     best = d
     for _ in range(LOOP_ITERATIONS):
         d, better = mcmc_mh(d, lam, eta)
-        # Note that we will check every new rule list produced that has a better score than the
-        # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
-        # with probability alpha, so we cache the best rule list.
         best = d if better else best
     return best
 
