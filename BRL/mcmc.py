@@ -4,6 +4,7 @@ import scipy as sp
 from scipy.special import gamma
 import numpy as np
 import math
+import warnings
 from rulelist import *
 
 LOOP_ITERATIONS = 10000
@@ -11,12 +12,20 @@ LOOP_ITERATIONS = 10000
 # Score outcome y with capture vector N and preference vector alpha.
 # Ensure alpha reflects the multinomial representing the potential labels.
 def likelihood(N, alpha=[1,1]):
-    fit = 1.0
+    fit = np.float128(1.0)
     for capture in N:
-        numerator = 1.0
+        numerator = np.float128(1.0)
         for i in range(len(capture)): # Binary for our use, expect 2 iterations.
             numerator *= gamma(capture[i] + alpha[i])
-        fit *= numerator/ gamma(sum(capture) + sum(alpha))
+        with warnings.catch_warnings():
+            warnings.filterwarnings('error')
+            try:
+                # We could be dividing by an exceedingly large number, np inf
+                mult = numerator / np.float128(gamma(sum(capture) + sum(alpha)))
+                fit *= mult
+            except Warning:
+                fit = np.float128(1.0)
+
     return fit
 
 # TODO(iamabel): Exists for continuity with the paper. Serves almost no purpose, consider removal.
@@ -24,26 +33,26 @@ def which_antecedents():
     return 1
 
 def rules_list_length(m, len_A, lam):
-    denominator = 0.0
-    lam = float(lam)    # Ensure float when critical
+    denominator = np.float128(0.0)
+    lam = np.float128(lam)    # Ensure float when critical
     for j in range(len_A+1):
-        denominator += lam**j/math.factorial(j)
+        denominator += lam**j/np.float128(math.factorial(j))
 
-    return (lam**m/math.factorial(m))/denominator
+    return (lam**m/np.float128(math.factorial(m)))/denominator
 
 def antecedent_length(len_j, A_after_j, eta):
-    denominator = 0.0
-    eta = float(eta)    # Ensure float when critical
+    denominator = np.float128(0.0)
+    eta = np.float128(eta)    # Ensure float when critical
     for k in A_after_j:
         # TODO(iamabel): The paper is unclear here with what exactly R_{j-1} is
-        denominator += eta**len(k)/math.factorial(len(k))
+        denominator += eta**len(k)/np.float128(math.factorial(len(k)))
 
-    return (eta**len_j/math.factorial(len_j))/denominator
+    return (eta**len_j/np.float128(math.factorial(len_j)))/denominator
 
 # Score rule list d with antecedent list d.antecedents, and hyperparameters lam(bda) (desired rule
 # list length) and eta (desired number of conditions per rule).
 def prior(d, lam, eta):
-    antecedent_product = 1.0
+    antecedent_product =  np.float128(1.0)
     for j in range(len(d.rules)):
         antecedent_product *= antecedent_length(len(d.rules[j]), d.rules[j:], eta)*which_antecedents()
     return antecedent_product * rules_list_length(len(d.rules), len(d.antecedents), lam)
