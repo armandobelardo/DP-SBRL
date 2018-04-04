@@ -24,7 +24,7 @@ def likelihood(N, alpha=[1,1]):
                 mult = numerator / np.float128(gamma(sum(capture) + sum(alpha)))
                 fit *= mult
             except Warning:
-                fit = np.float128(1.0)
+                fit *= np.float128(1.0)
 
     return fit
 
