@@ -113,8 +113,14 @@ def mcmc_mh(d, lam, eta):
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
         return d, better
 
-    Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
-    alpha = (score(new_rule_list, lam, eta)/score(d, lam, eta)) * Q_factor
+    Q_factor = np.float128(Q(d, alteration) / Q(new_rule_list, alteration))
+    with warnings.catch_warnings():
+        warnings.filterwarnings('error')
+        try:
+            alpha = score(new_rule_list, lam, eta)/score(d, lam, eta) * Q_factor
+        except Warning:
+            alpha = Q_factor
+
     # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha.
     if alpha >= 1 or np.random.uniform() <= alpha:
         d = new_rule_list

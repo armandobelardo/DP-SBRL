@@ -38,16 +38,25 @@ class RuleList:
         for i in range(len(self.rules)):
             probability = 0.0 if sum(self.captures[i]) == 0 else float(self.captures[i][1])/sum(self.captures[i])
             print("if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(probability))
+        # Default Rule.
+        probability = 0.0 if sum(self.captures[-1]) == 0 else float(self.captures[i][-1])/sum(self.captures[-1])
+        print("if (default rule) then probability of "+ self.label + " = " + str(probability))
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
-    # Updates self.captures
+    # Updates self.captures.
     def run_data(self):
         self.captures = np.zeros((len(self.rules), 2)).tolist()
         for transaction in self.dataset:
+            added = False
             for i, rule in enumerate(self.rules):
                 if set(rule).issubset(transaction):
+                    added = True
                     self.captures[i][self.label in transaction] += 1
                     break
+            # Default Rule, note that we will have the rule list be one shorter, given we have
+            # no need to represent the default rule and we should not move or delete it.
+            if not added:
+                self.captures[-1][self.label in transaction] += 1
 
     # Swap rules in positions i and j, updating corresponding capture vectors.
     # Naive: just run_data again.

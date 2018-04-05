@@ -4,6 +4,7 @@ sys.path.append("../BRL")
 from mcmc import *
 from rulelist import *
 from data import *
+from sklearn import metrics
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
 # Compare length of rule list and average length of the antecedents, compare to lambda and eta.
@@ -55,6 +56,39 @@ def compTitanic():
     # scoring(d, pd, 5.0, 3.0)
     # return d, pd
 
+def trueLabel1(ds, label):
+    labels = []
+    for transaction in ds:
+        if label in transaction:
+            labels.append(1)
+        else:
+            labels.append(0)
+    return labels
+
+def confidenceOfLabel1(ds, rl):
+    rule_conf = []
+    conf_scores = []
+    for capture in rl.captures:
+        probability = 0.0 if sum(capture) == 0 else float(capture[1])/sum(capture)
+        rule_conf.append(probability)
+
+    for transaction in ds:
+        added = False
+        for i, rule in enumerate(rl.rules):
+            if set(rule).issubset(transaction):
+                added = True
+                conf_scores.append(rule_conf[i])
+                break
+        # Default rule, transaction is not captured by any other rule.
+        if not added:
+            conf_scores.append(rule_conf[-1])
+    return conf_scores
+
+def accuracy(ds, rl):
+    fpr, tpr, _ = metrics.roc_curve(trueLabel1(ds, rl.label), confidenceOfLabel1(ds, rl))
+    roc_auc = metrics.auc(fpr, tpr)
+    return roc_auc
+
 def runTitanicReserve(titanic_rl, priv_titanic_rl):
     titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
     d_ac = accuracy(titanic_res_DS, titanic_rl)
@@ -67,10 +101,19 @@ def runNoNoise(ds, priv_rl):
     pd_ac = accuracy(ds, priv_rl)
     print("The privatized rule list has an accuracy of " + str(pd_ac) + " on the original, untouched DS.\n")
 
-def main():
-    shroom_rl, priv_shroom_rl = compShroom()
-    titanic_rl, priv_titanic_rl = compTitanic()
+def regSysTest():
+    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 4.0, 10000)
+    print("Rule list for Shrooms:\n")
+    d.printNeat()
+    print("\n_____TESTING______\n")
+    print(accuracy(d.dataset, d))
 
-    runTitanicReserve(titanic_rl, priv_titanic_rl)
-    runNoNoise(shroom_rl.dataset, priv_shroom_rl)
+
+# def main():
+    # shroom_rl, priv_shroom_rl = compShroom()
+    # titanic_rl, priv_titanic_rl = compTitanic()
+    #
+    # runTitanicReserve(titanic_rl, priv_titanic_rl)
+    # runNoNoise(shroom_rl.dataset, priv_shroom_rl)
     # TODO(iamabel): need a test for different epsilon values, also need the DP solution (hahaha).
+regSysTest()
