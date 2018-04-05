@@ -171,7 +171,7 @@ namespace {
 int main(int argc, char** argv) {
   // (confidence pruning)
   char *filename = (char *)"../Data/UCI_shroom_clean.txt";
-  float minsup = 0.59f;
+  float minsup = 0.22f;
   float minconf = 0.6f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
@@ -254,10 +254,10 @@ int main(int argc, char** argv) {
                                                                         minsup, &maximal_items);
   unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
 
-  while (next_sets.size() > 1) {
-    frequent_itemsets.insert(next_sets.begin(), next_sets.end());
-    next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
-  }
+  // while (next_sets.size() > 1) {
+  //   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
+  //   next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
+  // }
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   {

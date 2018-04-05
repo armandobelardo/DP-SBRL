@@ -1,7 +1,9 @@
 #!/usr/bin/env python
+from __future__ import division
 
 import scipy as sp
 from scipy.special import gamma
+from scipy.misc import factorial
 import numpy as np
 import math
 import warnings
@@ -33,21 +35,22 @@ def which_antecedents():
     return 1
 
 def rules_list_length(m, len_A, lam):
-    denominator = np.float128(0.0)
-    lam = np.float128(lam)    # Ensure float when critical
+    denominator = np.longdouble(0.0)
+    lam = np.longdouble(lam)    # Ensure double when critical
     for j in range(len_A+1):
-        denominator += lam**j/np.float128(math.factorial(j))
+        denominator += lam**j/factorial(j)
 
-    return (lam**m/np.float128(math.factorial(m)))/denominator
+    return (lam**m/factorial(m))/denominator
 
 def antecedent_length(len_j, A_after_j, eta):
-    denominator = np.float128(0.0)
-    eta = np.float128(eta)    # Ensure float when critical
+    denominator = np.longdouble(0.0)
+    eta = np.longdouble(eta)    # Ensure double when critical
     for k in A_after_j:
         # TODO(iamabel): The paper is unclear here with what exactly R_{j-1} is
-        denominator += eta**len(k)/np.float128(math.factorial(len(k)))
+        # Note the denominator is never that large, considering we heavily constrict antecedent mining.
+        denominator += eta**len(k)/factorial(len(k))
 
-    return (eta**len_j/np.float128(math.factorial(len_j)))/denominator
+    return (eta**len_j/factorial(len_j))/denominator
 
 # Score rule list d with antecedent list d.antecedents, and hyperparameters lam(bda) (desired rule
 # list length) and eta (desired number of conditions per rule).

@@ -86,7 +86,7 @@ class RuleList:
         self.dataset = readData(dataset)
         self.antecedents = readFIM(antecedents, label)
 
-        self.rules = self.antecedents[:]
-        self.unused = []
+        self.rules = self.antecedents[0]
+        self.unused = self.antecedents[1:]
         self.captures = []
         self.run_data()

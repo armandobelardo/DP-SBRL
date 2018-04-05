@@ -102,7 +102,7 @@ def runNoNoise(ds, priv_rl):
     print("The privatized rule list has an accuracy of " + str(pd_ac) + " on the original, untouched DS.\n")
 
 def regSysTest():
-    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 4.0, 10000)
+    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 5.0, 1.0, 30000)
     print("Rule list for Shrooms:\n")
     d.printNeat()
     print("\n_____TESTING______\n")
