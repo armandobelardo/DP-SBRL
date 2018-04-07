@@ -2,7 +2,7 @@
 from __future__ import division
 
 import scipy as sp
-from scipy.special import gamma
+from scipy.special import gammaln
 from scipy.misc import factorial
 import numpy as np
 import math
@@ -13,20 +13,14 @@ LOOP_ITERATIONS = 10000
 
 # Score outcome y with capture vector N and preference vector alpha.
 # Ensure alpha reflects the multinomial representing the potential labels.
+# To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def likelihood(N, alpha=[1,1]):
-    fit = np.float128(1.0)
+    fit = 1.0
     for capture in N:
-        numerator = np.float128(1.0)
+        numerator = 1.0
         for i in range(len(capture)): # Binary for our use, expect 2 iterations.
-            numerator *= gamma(capture[i] + alpha[i])
-        with warnings.catch_warnings():
-            warnings.filterwarnings('error')
-            try:
-                # We could be dividing by an exceedingly large number, np inf
-                mult = numerator / np.float128(gamma(sum(capture) + sum(alpha)))
-                fit *= mult
-            except Warning:
-                fit *= np.float128(1.0)
+            numerator += gammaln(capture[i] + alpha[i])
+        fit += numerator - gammaln(sum(capture) + sum(alpha))
 
     return fit
 
@@ -34,34 +28,38 @@ def likelihood(N, alpha=[1,1]):
 def which_antecedents():
     return 1
 
+# To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def rules_list_length(m, len_A, lam):
-    denominator = np.longdouble(0.0)
-    lam = np.longdouble(lam)    # Ensure double when critical
+    denominator = np.float128(0.0)
+    lam = np.float128(lam)    # Ensure double when critical
     for j in range(len_A+1):
         denominator += lam**j/factorial(j)
 
-    return (lam**m/factorial(m))/denominator
+    return (np.log(lam**m)-np.log(factorial(m))) - np.log(denominator)
 
+# To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def antecedent_length(len_j, A_after_j, eta):
-    denominator = np.longdouble(0.0)
-    eta = np.longdouble(eta)    # Ensure double when critical
+    denominator = np.float128(0.0)
+    eta = np.float128(eta)    # Ensure double when critical
     for k in A_after_j:
         # TODO(iamabel): The paper is unclear here with what exactly R_{j-1} is
         # Note the denominator is never that large, considering we heavily constrict antecedent mining.
         denominator += eta**len(k)/factorial(len(k))
 
-    return (eta**len_j/factorial(len_j))/denominator
+    return (np.log(eta**len_j)/np.log(factorial(len_j))) - np.log(denominator)
 
 # Score rule list d with antecedent list d.antecedents, and hyperparameters lam(bda) (desired rule
 # list length) and eta (desired number of conditions per rule).
+# To avoid integer over- or under-flow, we are getting the log of the prior.
 def prior(d, lam, eta):
     antecedent_product =  np.float128(1.0)
     for j in range(len(d.rules)):
-        antecedent_product *= antecedent_length(len(d.rules[j]), d.rules[j:], eta)*which_antecedents()
-    return antecedent_product * rules_list_length(len(d.rules), len(d.antecedents), lam)
+        antecedent_product += antecedent_length(len(d.rules[j]), d.rules[j:], eta)
+    return antecedent_product + rules_list_length(len(d.rules), len(d.antecedents), lam)
 
+# To avoid integer over- or under-flow, we are using logs, hence the addition as opposed got multiplication.
 def score(d, lam, eta):
-    return prior(d, lam, eta)*likelihood(d.captures)
+    return prior(d, lam, eta)+likelihood(d.captures)
 
 # Uniformly at random select the rule list mutation. Then uniformly at random select the antecedents
 # to move around and their new locations.
@@ -111,25 +109,28 @@ def Q(given, alteration):
 
 # Run Metropolis-Hastings MCMC, get new rule list, score, keep or reject based on random alpha.
 def mcmc_mh(d, lam, eta):
-    better = False    # Indicate that the new rule list is better than the previous
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
         return d, better
 
-    Q_factor = np.float128(Q(d, alteration) / Q(new_rule_list, alteration))
-    with warnings.catch_warnings():
-        warnings.filterwarnings('error')
-        try:
-            alpha = score(new_rule_list, lam, eta)/score(d, lam, eta) * Q_factor
-        except Warning:
-            alpha = Q_factor
+    Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
+    lg_alpha = (score(new_rule_list, lam, eta) - score(d, lam, eta)) + np.log(Q_factor)
 
     # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha.
-    if alpha >= 1 or np.random.uniform() <= alpha:
-        d = new_rule_list
-        if alpha >= 1:
-            better = True
-    return d, better
+    # Given we are utilizing logs, we compare to 0 (basically 1 once exponentiated), additionally,
+    # we must catch underflow here, hence the try catch. We assume low scores are yielded from a
+    # much lower scoring new rule list, and so we reject it.
+    if lg_alpha < 0:
+        with warnings.catch_warnings():
+            warnings.filterwarnings('error')
+            try:
+                alpha = np.exp(lg_alpha)
+                if np.random.uniform() <= alpha:
+                    return new_rule_list, False
+            except Warning:
+                return d, False
+    else:
+        return d, True
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
 # per rule, respectively. These must be floats.
