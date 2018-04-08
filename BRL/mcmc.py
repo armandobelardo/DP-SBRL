@@ -46,7 +46,7 @@ def antecedent_length(len_j, A_after_j, eta):
         # Note the denominator is never that large, considering we heavily constrict antecedent mining.
         denominator += eta**len(k)/factorial(len(k))
 
-    return (np.log(eta**len_j)/np.log(factorial(len_j))) - np.log(denominator)
+    return (np.log(eta**len_j)-np.log(factorial(len_j))) - np.log(denominator)
 
 # Score rule list d with antecedent list d.antecedents, and hyperparameters lam(bda) (desired rule
 # list length) and eta (desired number of conditions per rule).
@@ -127,6 +127,8 @@ def mcmc_mh(d, lam, eta):
                 alpha = np.exp(lg_alpha)
                 if np.random.uniform() <= alpha:
                     return new_rule_list, False
+                else:
+                    return d, False
             except Warning:
                 return d, False
     else:
