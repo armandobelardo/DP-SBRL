@@ -30,14 +30,6 @@ def proximity(d, pd, lam, eta):
     print(("d" if d_closer_eta else "pd") + " is more 'readable' WRT eta with an average antecedent length (" +
           (avgAntD if d_closer_eta else avgAntPD) + ", closer to our eta: "+ str(eta) + '\n')
 
-def scoring(d, pd, lam, eta):
-    d_score = score(d, lam, eta)
-    pd_score = score(pd, lam, eta)
-
-    print("Rule list "+("d" if d_score > pd_score else "pd")+" scores higher with a score of " +
-         (str(d_score) if d_score > pd_score else str(pd_score)) + " vs. " +
-         (str(pd_score) if d_score > pd_score else str(d_score)) + '\n')
-
 def compShroom():
     d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 4.0, 10000)
     print("Regular Shroom Rule List:")
@@ -120,11 +112,12 @@ def runNoNoise(ds, priv_rl):
     print("The privatized rule list has an accuracy of " + str(pd_ac) + " on the original, untouched DS.\n")
 
 def regSysTest():
-    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 5.0, 1.0, 1000)
+    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 9.0, 1.0, 1000)
     print("Rule list for Shrooms:\n")
     d.printNeat()
     print("\n_____TESTING______\n")
     print(accuracy(d.dataset, d))
+    print(score(d, 9.0, 1.0))
 
 
 # def main():

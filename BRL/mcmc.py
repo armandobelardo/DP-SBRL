@@ -132,7 +132,7 @@ def mcmc_mh(d, lam, eta):
             except Warning:
                 return d, False
     else:
-        return d, True
+        return new_rule_list, True
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
 # per rule, respectively. These must be floats.
