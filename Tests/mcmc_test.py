@@ -4,6 +4,8 @@ sys.path.append("../BRL")
 from data import *
 from mcmc import *
 
+LOOP_ITERATIONS = 500
+
 # If we do not run any MCMC iterations we should get a rule list consisting of all possible rules with
 # the corresponding information correct (ie. label, rules, captures, unused)
 def initRLTest():
@@ -54,10 +56,29 @@ def skewedMCMC():
     d1 = run("../Data/skewed_fim.txt", "../Data/skewed_data.txt", "hi", 1.0, 1.0, 100000)
     d2 = run("../Data/skewed_fim.txt", "../Data/skewed_data.txt", "hi", 1.0, 1.0, 100000)
     return d1.rules == d2.rules
+# Note short_fim.txt has only 3 antecedents which means there are 18 potential rule lists. These were
+# made from dat2_test.txt with minsup=.8
+def sampleEnd():
+    actual_rl_d = {}
+    all_d = []
+    d = RuleList("../Data/short_fim.txt", "../Data/dat2_test.txt",  "diapers")
+
+    for _ in range(LOOP_ITERATIONS//2)
+        for _ in range(LOOP_ITERATIONS):
+            d = mcmc_mh(d, 3.0, 1.0)
+        hashable_d = d.strNeat()
+        all_d.append(d)
+        if hashable_d not in actual_rl_d:
+            actual_rl_d[hashable_d] = 1
+        else:
+            actual_rl_d[hashable_d] += 1
+
+    expected_rl_d = {rl:(score(rl)*LOOP_ITERATIONS//2) for rl in all_d}
+    # TODO(iamabel): Graph expected against actual or find a way to tell their difference.
 
 def main():
     print("init Rule List built correctly? " + str(initRLTest()))
     print("All Mathematical Tests Passed? " + str(mathmaticalTests()))
     print("Did the MCMC work? " + str(skewedMCMC()))
-    
+
 main()

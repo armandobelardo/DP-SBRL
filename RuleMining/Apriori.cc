@@ -170,8 +170,8 @@ namespace {
 
 int main(int argc, char** argv) {
   // (confidence pruning)
-  char *filename = (char *)"../Data/UCI_shroom_clean.txt";
-  float minsup = 0.22f;
+  char *filename = (char *)"../Data/dat2_test.txt";
+  float minsup = 0.8f;
   float minconf = 0.6f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
@@ -261,7 +261,7 @@ int main(int argc, char** argv) {
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   {
-    ofstream outputFile("../Data/shroom_fim.txt");
+    ofstream outputFile("../Data/short_fim.txt");
     printf("-------------Frequent Itemsets------------\n");
     for (auto itemset_support : frequent_itemsets) {
       // freq_sets.push_back(itemset_support.first);

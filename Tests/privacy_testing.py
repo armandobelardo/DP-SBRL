@@ -6,7 +6,7 @@ from rulelist import *
 from data import *
 from sklearn import metrics
 
-separator = "\n_______________________________________________________\n"
+SEP = "\n_______________________________________________________\n"
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
 # Compare length of rule list and average length of the antecedents, compare to lambda and eta.
@@ -127,14 +127,15 @@ def regSysTest():
 #     print("\tRule list\t|\tAvg ant. len.: Shroom - eta: 1.0\t|\tRule list length: Shroom - lam: 5.0")
 #     for i,rl in enumerate(rlsShroom):
 #         print(rl_labels[i] + "\t|\t" + str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)))
-#     print(separator)
+#     print(SEP)
 #
 #     # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
 #     titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
 #     print("\tRule list\t|\tTraining auROC\t|\tAccuracy OoS")
 #     for i,rl in enumerate(rlsTitanic):
 #         print(rl_labels[i] + "\t|\t" + str(accuracy(rl.dataset, rl)) + "\t|\t" + str(accOOS(titanic_res_DS, rl)))
-#
+#     print(SEP)
+# 
 #     # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
 #     titanic_DS = readData("../Data/kaggle_titanic_clean_train.txt")
 #     print("\tRule list\t|\tAccuracy on unNoisey DS")

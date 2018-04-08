@@ -42,6 +42,15 @@ class RuleList:
         probability = 0.0 if sum(self.captures[-1]) == 0 else float(self.captures[i][-1])/sum(self.captures[-1])
         print("if (default rule) then probability of "+ self.label + " = " + str(probability))
 
+    def strNeat(self):
+        str_rl = ""
+        for i in range(len(self.rules)):
+            probability = 0.0 if sum(self.captures[i]) == 0 else float(self.captures[i][1])/sum(self.captures[i])
+            str_rl+= "if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(probability)
+        # Default Rule.
+        probability = 0.0 if sum(self.captures[-1]) == 0 else float(self.captures[i][-1])/sum(self.captures[-1])
+        str_rl+= "if (default rule) then probability of "+ self.label + " = " + str(probability)
+
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures.
     def run_data(self):
