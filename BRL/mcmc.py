@@ -30,12 +30,8 @@ def which_antecedents():
 
 # To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def rules_list_length(m, len_A, lam):
-    denominator = np.float128(0.0)
     lam = np.float128(lam)    # Ensure double when critical
-    for j in range(len_A+1):
-        denominator += lam**j/factorial(j)
-
-    return (np.log(lam**m)-np.log(factorial(m))) - np.log(denominator)
+    return (np.log(lam**m)-np.log(factorial(m)))
 
 # To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def antecedent_length(len_j, A_after_j, eta):
