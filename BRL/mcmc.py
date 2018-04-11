@@ -57,6 +57,12 @@ def prior(d, lam, eta):
 def score(d, lam, eta):
     return prior(d, lam, eta)+likelihood(d.captures)
 
+def dp_score(d, lam, eta, epsilon):
+    return (epsilon*score(d, lam, eta)) - (2*np.log(len(d.dataset)))
+
+def scoring(d, lam, eta, epsilon, dp):
+    return dp_score(d, lam, eta, epsilon) if dp else score(d, lam, eta)
+
 # Uniformly at random select the rule list mutation. Then uniformly at random select the antecedents
 # to move around and their new locations.
 def proposal(d):
@@ -104,13 +110,13 @@ def Q(given, alteration):
         return 1.0/(len(given.rules)*(len(given.rules)-1))
 
 # Run Metropolis-Hastings MCMC, get new rule list, score, keep or reject based on random alpha.
-def mcmc_mh(d, lam, eta):
+def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
         return d, better
 
     Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
-    lg_alpha = (score(new_rule_list, lam, eta) - score(d, lam, eta)) + np.log(Q_factor)
+    lg_alpha = (scoring(new_rule_list, lam, eta, epsilon, dp) - scoring(d, lam, eta, epsilon, dp)) + np.log(Q_factor)
 
     # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha.
     # Given we are utilizing logs, we compare to 0 (basically 1 once exponentiated), additionally,
@@ -129,6 +135,7 @@ def mcmc_mh(d, lam, eta):
                 return d, False
     else:
         return new_rule_list, True
+
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
 # per rule, respectively. These must be floats.
