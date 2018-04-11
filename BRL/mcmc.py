@@ -113,7 +113,7 @@ def Q(given, alteration):
 def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
-        return d, better
+        return d, False
 
     Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
     lg_alpha = (scoring(new_rule_list, lam, eta, epsilon, dp) - scoring(d, lam, eta, epsilon, dp)) + np.log(Q_factor)
@@ -147,6 +147,14 @@ def run(antecedents, dataset, label, lam, eta, loops):
         # Note that we will check every new rule list produced that has a better score than the
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
+        best = d if better else best
+    return best
+
+def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
+    d = RuleList(antecedents, dataset, label)
+    best = d
+    for _ in range(loops):
+        d, better = mcmc_mh(d, lam, eta, epsilon, True)
         best = d if better else best
     return best
 

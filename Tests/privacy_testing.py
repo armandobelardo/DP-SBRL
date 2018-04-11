@@ -119,6 +119,12 @@ def regSysTest():
     print(accuracy(d.dataset, d))
     print(score(d, 9.0, 1.0))
 
+def DPSysTest():
+    d = runDP("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 5.0, 1.0, .1, 1000)
+    print("DP Rule list for Shrooms:\n")
+    d.printNeat()
+    print("\n_____TESTING______\n")
+    print(accuracy(d.dataset, d))
 
 # def main():
 #     rl_labels = ["Regular", "DP ep:.3"] # Just examples, fill in with the DP epsilons used
@@ -135,7 +141,7 @@ def regSysTest():
 #     for i,rl in enumerate(rlsTitanic):
 #         print(rl_labels[i] + "\t|\t" + str(accuracy(rl.dataset, rl)) + "\t|\t" + str(accOOS(titanic_res_DS, rl)))
 #     print(SEP)
-# 
+#
 #     # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
 #     titanic_DS = readData("../Data/kaggle_titanic_clean_train.txt")
 #     print("\tRule list\t|\tAccuracy on unNoisey DS")
@@ -143,4 +149,4 @@ def regSysTest():
 #         print(rl_labels[i+1] + "\t|\t" + str(accOOS(titanic_DS, rl)))
 #     # TODO(iamabel): need a test for different epsilon values, also need the DP solution (hahaha).
 
-regSysTest()
+DPSysTest()
