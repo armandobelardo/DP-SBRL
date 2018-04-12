@@ -15,9 +15,9 @@ LOOP_ITERATIONS = 10000
 # Ensure alpha reflects the multinomial representing the potential labels.
 # To avoid integer over- or under-flow, we are getting the log of the likelihood.
 def likelihood(N, alpha=[1,1]):
-    fit = 1.0
+    fit = 0.0
     for capture in N:
-        numerator = 1.0
+        numerator = 0.0
         for i in range(len(capture)): # Binary for our use, expect 2 iterations.
             numerator += gammaln(capture[i] + alpha[i])
         fit += numerator - gammaln(sum(capture) + sum(alpha))
@@ -28,12 +28,12 @@ def likelihood(N, alpha=[1,1]):
 def which_antecedents():
     return 1
 
-# To avoid integer over- or under-flow, we are getting the log of the likelihood.
+# To avoid integer over- or under-flow, we are getting the log of the rules_list_length.
 def rules_list_length(m, len_A, lam):
     lam = np.float128(lam)    # Ensure double when critical
     return (np.log(lam**m)-np.log(factorial(m)))
 
-# To avoid integer over- or under-flow, we are getting the log of the likelihood.
+# To avoid integer over- or under-flow, we are getting the log of the antecedent_length.
 def antecedent_length(len_j, A_after_j, eta):
     denominator = np.float128(0.0)
     eta = np.float128(eta)    # Ensure double when critical
@@ -48,10 +48,10 @@ def antecedent_length(len_j, A_after_j, eta):
 # list length) and eta (desired number of conditions per rule).
 # To avoid integer over- or under-flow, we are getting the log of the prior.
 def prior(d, lam, eta):
-    antecedent_product =  np.float128(1.0)
+    antecedent_sum =  np.float128(0.0)
     for j in range(len(d.rules)):
-        antecedent_product += antecedent_length(len(d.rules[j]), d.rules[j:], eta)
-    return antecedent_product + rules_list_length(len(d.rules), len(d.antecedents), lam)
+        antecedent_sum += antecedent_length(len(d.rules[j]), d.rules[j:], eta)
+    return antecedent_sum + rules_list_length(len(d.rules), len(d.antecedents), lam)
 
 # To avoid integer over- or under-flow, we are using logs, hence the addition as opposed got multiplication.
 def score(d, lam, eta):
@@ -113,7 +113,7 @@ def Q(given, alteration):
 def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
-        return d, False
+        return d
 
     Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
     lg_alpha = (scoring(new_rule_list, lam, eta, epsilon, dp) - scoring(d, lam, eta, epsilon, dp)) + np.log(Q_factor)
@@ -128,13 +128,13 @@ def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
             try:
                 alpha = np.exp(lg_alpha)
                 if np.random.uniform() <= alpha:
-                    return new_rule_list, False
+                    return new_rule_list
                 else:
-                    return d, False
+                    return d
             except Warning:
-                return d, False
+                return d
     else:
-        return new_rule_list, True
+        return new_rule_list
 
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
@@ -143,18 +143,11 @@ def run(antecedents, dataset, label, lam, eta, loops):
     d = RuleList(antecedents, dataset, label)
     best = d
     for _ in range(loops):
-        d, better = mcmc_mh(d, lam, eta)
+        d = mcmc_mh(d, lam, eta)
+        better = (scoring(d, lam, eta, 1, False) - scoring(best, lam, eta, 1, False)) > 0
         # Note that we will check every new rule list produced that has a better score than the
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
-        best = d if better else best
-    return best
-
-def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
-    d = RuleList(antecedents, dataset, label)
-    best = d
-    for _ in range(loops):
-        d, better = mcmc_mh(d, lam, eta, epsilon, True)
         best = d if better else best
     return best
 
@@ -162,9 +155,16 @@ def runDefault(lam, eta):
     d = RuleList()
     best = d
     for _ in range(LOOP_ITERATIONS):
-        d, better = mcmc_mh(d, lam, eta)
+        d = mcmc_mh(d, lam, eta)
+        better = (scoring(d, lam, eta, 1, False) - scoring(best, lam, eta, 1, False)) > 0
         best = d if better else best
     return best
+
+def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
+    d = RuleList(antecedents, dataset, label)
+    for _ in range(loops):
+        d = mcmc_mh(d, lam, eta, epsilon, True)
+    return d
 
 def main():
     d = runDefault(5.0, 3.0)

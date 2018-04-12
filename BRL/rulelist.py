@@ -54,7 +54,7 @@ class RuleList:
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures.
     def run_data(self):
-        self.captures = np.zeros((len(self.rules), 2)).tolist()
+        self.captures = np.zeros((len(self.rules)+1, 2)).tolist()
         for transaction in self.dataset:
             added = False
             for i, rule in enumerate(self.rules):
@@ -95,7 +95,7 @@ class RuleList:
         self.dataset = readData(dataset)
         self.antecedents = readFIM(antecedents, label)
 
-        self.rules = self.antecedents[0]
+        self.rules = [self.antecedents[0]]
         self.unused = self.antecedents[1:]
         self.captures = []
         self.run_data()
