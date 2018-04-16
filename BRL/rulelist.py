@@ -14,6 +14,7 @@ class RuleList:
         unused: List of lists of unused antecedents.
         captures: List of lists of counts captured per label for a specific rule. An entry is
                   captured by the first rule in which antecedents are a subset of the data entry.
+        pointEstimates: ...
     '''
     # TODO(iamabel): how do we want to start this? Random size and then random antecedents?
     # def random_rule_list(self):
@@ -32,24 +33,31 @@ class RuleList:
         d_c.unused = self.unused[:]
         d_c.captures = self.captures[:]
 
+        d_c.pointEstimates = self.pointEstimates[:]
+
         return d_c
 
+    def calcPointEstimates(self, alpha=[1,1]):
+        estimates = self.pointEstimates
+        for capture in captures:
+            # Note there is no worry of dividing by 0, given a nonzero alpha
+            estimates.append((capture[1] + alpha[1])/(sum(capture)+sum(alpha)))
+
+    # NEED TO CALL calcPointEstimates BEFORE.
     def printNeat(self):
         for i in range(len(self.rules)):
-            probability = 0.0 if sum(self.captures[i]) == 0 else float(self.captures[i][1])/sum(self.captures[i])
-            print("if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(probability))
+            print("if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(self.pointEstimates[i]))
         # Default Rule.
-        probability = 0.0 if sum(self.captures[-1]) == 0 else float(self.captures[i][-1])/sum(self.captures[-1])
-        print("if (default rule) then probability of "+ self.label + " = " + str(probability))
+        print("if (default rule) then probability of "+ self.label + " = " + str(self.pointEstimates[-1]))
 
     def strNeat(self):
         str_rl = ""
         for i in range(len(self.rules)):
-            probability = 0.0 if sum(self.captures[i]) == 0 else float(self.captures[i][1])/sum(self.captures[i])
-            str_rl+= "if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(probability)
+            str_rl += "if " + ' '.join(self.rules[i]) + " then probability of " + self.label + " = " + str(self.pointEstimates[i])
         # Default Rule.
-        probability = 0.0 if sum(self.captures[-1]) == 0 else float(self.captures[i][-1])/sum(self.captures[-1])
-        str_rl+= "if (default rule) then probability of "+ self.label + " = " + str(probability)
+        str_rl += "if (default rule) then probability of "+ self.label + " = " + str(self.pointEstimates[-1])
+
+        return str_rl
 
     # Run through dataset, find corresponding rule and update corresponding capture vector.
     # Updates self.captures.
@@ -106,4 +114,5 @@ class RuleList:
         self.rules = [self.antecedents[0]]
         self.unused = self.antecedents[1:]
         self.captures = []
+        self.pointEstimates = []
         self.run_data()

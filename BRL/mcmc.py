@@ -149,6 +149,7 @@ def run(antecedents, dataset, label, lam, eta, loops):
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
         best = d if better else best
+    d.calcPointEstimates()
     return best
 
 def runDefault(lam, eta):
@@ -158,6 +159,7 @@ def runDefault(lam, eta):
         d = mcmc_mh(d, lam, eta)
         better = (scoring(d, lam, eta, 1, False) - scoring(best, lam, eta, 1, False)) > 0
         best = d if better else best
+    d.calcPointEstimates()
     return best
 
 def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
@@ -165,6 +167,7 @@ def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
     for _ in range(loops):
         d = mcmc_mh(d, lam, eta, epsilon, True)
     d.noisifyCaptures(epsilon)
+    d.calcPointEstimates()
     return d
 
 def main():
