@@ -164,6 +164,7 @@ def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
     d = RuleList(antecedents, dataset, label)
     for _ in range(loops):
         d = mcmc_mh(d, lam, eta, epsilon, True)
+    d.noisifyCaptures(epsilon)
     return d
 
 def main():

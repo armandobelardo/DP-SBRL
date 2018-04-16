@@ -89,6 +89,14 @@ class RuleList:
 
         self.run_data()
 
+    # Add Laplace noise with a scale of epsilon. Note that according to Dwork, for privacy, we must
+    # scale with m/epsilon for m queries.
+    def noisifyCaptures(self, epsilon):
+        for capture in self.captures:
+            for i in range(len(capture)):
+                capture[i] = max(0.0, capture[i]+np.random.laplace(0,len(2*self.captures)/epsilon))
+
+
     def __init__(self, antecedents="../Data/fim_1.txt", dataset="../Data/dat2_test.txt", label="diapers"):
         self.label = label
 

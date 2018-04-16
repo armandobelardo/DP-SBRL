@@ -6,7 +6,10 @@ from rulelist import *
 from data import *
 from sklearn import metrics
 
-SEP = "\n_______________________________________________________\n"
+TABLE = "_______________________________________________________"
+SEP = "\n...................................................\n"
+
+MCMC_REPS = 2000
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
 # Compare length of rule list and average length of the antecedents, compare to lambda and eta.
@@ -126,27 +129,39 @@ def DPSysTest():
     print("\n_____TESTING______\n")
     print(accuracy(d.dataset, d))
 
-# def main():
-#     rl_labels = ["Regular", "DP ep:.3"] # Just examples, fill in with the DP epsilons used
-#
-#     # Test: Run all rule lists on the shroom dataset and compare lengths to hyperparameters.
-#     print("\tRule list\t|\tAvg ant. len.: Shroom - eta: 1.0\t|\tRule list length: Shroom - lam: 5.0")
-#     for i,rl in enumerate(rlsShroom):
-#         print(rl_labels[i] + "\t|\t" + str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)))
-#     print(SEP)
-#
-#     # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
-#     titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
-#     print("\tRule list\t|\tTraining auROC\t|\tAccuracy OoS")
-#     for i,rl in enumerate(rlsTitanic):
-#         print(rl_labels[i] + "\t|\t" + str(accuracy(rl.dataset, rl)) + "\t|\t" + str(accOOS(titanic_res_DS, rl)))
-#     print(SEP)
-#
-#     # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
-#     titanic_DS = readData("../Data/kaggle_titanic_clean_train.txt")
-#     print("\tRule list\t|\tAccuracy on unNoisey DS")
-#     for i,rl in enumerate(rlsTitanicDP_ONLY):
-#         print(rl_labels[i+1] + "\t|\t" + str(accOOS(titanic_DS, rl)))
-#     # TODO(iamabel): need a test for different epsilon values, also need the DP solution (hahaha).
+def main():
+    rl_labels = ["Regular RL", "DP ep:.1", "DP ep:.01", "DP ep:.001"]
+    eps = [.1, .01, .001]
 
-DPSysTest()
+    # Test: Run all rule lists on the shroom dataset and compare lengths to hyperparameters.
+    print("\tRule list\t|\tAvg ant. len.: Shroom - eta: 1.0\t|\tRule list length: Shroom - lam: 7.0")
+    print(TABLE)
+    for i in range(len(rl_labels)):
+        if i == 0:
+            rl = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 1.0, MCMC_REPS)
+        else:
+            rl = runDP("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 1.0, eps[i-1], MCMC_REPS)
+        print("\t" + rl_labels[i] + "\t|\t" + str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)))
+    print(SEP)
+
+    # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
+    titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
+    print("\tRule list\t|\tTraining auROC\t|\tAccuracy OoS")
+    print(TABLE)
+    for i in range(len(rl_labels)):
+        if i == 0:
+            rl = run("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, MCMC_REPS)
+        else:
+            rl = runDP("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, eps[i-1], MCMC_REPS)
+        print("\t" + rl_labels[i] + "\t|\t" + str(accuracy(rl.dataset, rl)) + "\t|\t" + str(accOOS(titanic_res_DS, rl)))
+    print(SEP)
+
+    # Test: Run accuracy for all DP rule lists on true data from the titanic dataset to test in training acc.
+    titanic_DS = readData("../Data/kaggle_titanic_clean_train.txt")
+    print(TABLE)
+    print("\tRule list\t|\tAccuracy on unNoisey DS")
+    for i in range(len(eps)):
+        rl = runDP("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, eps[i], MCMC_REPS)
+        print("\t" + rl_labels[i+1] + "\t|\t" + str(accOOS(titanic_DS, rl)))
+    # TODO(iamabel): need a test for different epsilon values, also need the DP solution (hahaha).
+main()
