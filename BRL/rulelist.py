@@ -102,7 +102,7 @@ class RuleList:
     def noisifyCaptures(self, epsilon):
         for capture in self.captures:
             for i in range(len(capture)):
-                capture[i] = max(0.0, capture[i]+np.random.laplace(0,len(2*self.captures)/epsilon))
+                capture[i] = max(0.0, capture[i]+np.random.laplace(0,1.0/epsilon))
 
 
     def __init__(self, antecedents="../Data/fim_1.txt", dataset="../Data/dat2_test.txt", label="diapers"):
