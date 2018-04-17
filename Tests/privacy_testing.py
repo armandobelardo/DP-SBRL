@@ -6,15 +6,15 @@ from rulelist import *
 from data import *
 from sklearn import metrics
 
-TABLE = "_______________________________________________________"
-SEP = "\n...................................................\n"
+TABLE = "__________________________________________________________________________________________________________________________________________________________________________________________________________"
+SEP = "\n............................................................................................................................................................................................................\n"
 
-MCMC_REPS = 2000
+MCMC_REPS = 1000
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
 # Compare length of rule list and average length of the antecedents, compare to lambda and eta.
-# Compare the accuracy of the private Rule List on it's classification on a reserved DS, vs non-private.
-# Compare the accuracy of the private Rule List on it's classification on the non-noisey DS.
+# Compare the auc of the private Rule List on it's classification on a reserved DS, vs non-private.
+# Compare the auc of the private Rule List on it's classification on the non-noisey DS.
 # See the above using different epsilon values.
 def avgAntecedentLen(rl):
     count = 0
@@ -32,26 +32,6 @@ def proximity(d, pd, lam, eta):
           (len(d.rules) if d_closer_lam else len(pd.rules)) + ", closer to our lambda: "+ str(lam))
     print(("d" if d_closer_eta else "pd") + " is more 'readable' WRT eta with an average antecedent length (" +
           (avgAntD if d_closer_eta else avgAntPD) + ", closer to our eta: "+ str(eta) + '\n')
-
-def compShroom():
-    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 4.0, 10000)
-    print("Regular Shroom Rule List:")
-    d.printNeat()
-    print("\n----------------- SHROOM TESTING ------------------\n")
-
-    # proximity(d, pd, 7.0, 4.0)
-    # scoring(d, pd, 7.0, 4.0)
-    # return d, pd
-
-def compTitanic():
-    d = run("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, 10000)
-    print("Regular Titanic Rule List:")
-    d.printNeat()
-    print("\n----------------- TITANIC TESTING ------------------\n")
-
-    # proximity(d, pd, 5.0, 3.0)
-    # scoring(d, pd, 5.0, 3.0)
-    # return d, pd
 
 def trueLabel1(ds, label):
     labels = []
@@ -81,7 +61,7 @@ def confidenceOfLabel1(ds, rl):
             conf_scores.append(rule_conf[-1])
     return conf_scores
 
-def accuracy(ds, rl):
+def auc(ds, rl):
     fpr, tpr, _ = metrics.roc_curve(trueLabel1(ds, rl.label), confidenceOfLabel1(ds, rl))
     roc_auc = metrics.auc(fpr, tpr)
     return roc_auc
@@ -104,22 +84,22 @@ def accOOS(new_ds, rl):
 
 def runTitanicReserve(titanic_rl, priv_titanic_rl):
     titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
-    d_ac = accuracy(titanic_res_DS, titanic_rl)
-    pd_ac = accuracy(titanic_res_DS, priv_titanic_rl)
+    d_ac = auc(titanic_res_DS, titanic_rl)
+    pd_ac = auc(titanic_res_DS, priv_titanic_rl)
     print("Rule list "+("d" if d_ac > pd_ac else "pd")+ " is more accurate with " +
          (str(d_ac) if d_ac > pd_ac else str(pd_ac)) + " correctly classified vs. " +
          (str(pd_ac) if d_ac > pd_ac else str(d_ac)) + " within the Titanic reserve DS.\n")
 
 def runNoNoise(ds, priv_rl):
-    pd_ac = accuracy(ds, priv_rl)
-    print("The privatized rule list has an accuracy of " + str(pd_ac) + " on the original, untouched DS.\n")
+    pd_ac = auc(ds, priv_rl)
+    print("The privatized rule list has an auc of " + str(pd_ac) + " on the original, untouched DS.\n")
 
 def regSysTest():
     d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 9.0, 1.0, 1000)
     print("Rule list for Shrooms:\n")
     d.printNeat()
     print("\n_____TESTING______\n")
-    print(accuracy(d.dataset, d))
+    print(auc(d.dataset, d))
     print(score(d, 9.0, 1.0))
 
 def DPSysTest():
@@ -127,41 +107,34 @@ def DPSysTest():
     print("DP Rule list for Shrooms:\n")
     d.printNeat()
     print("\n_____TESTING______\n")
-    print(accuracy(d.dataset, d))
+    print(auc(d.dataset, d))
 
+def fullTest(rl_labels, epsilons):
+    datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
+    reserve_ds = ["../Data/UCI_shroom_res.txt", "../Data/kaggle_titanic_clean_res.txt"]
+    fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
+    labels = ["edible", "Survived"]
+    rls = []
+    print("Rule list\t|\t Dataset \t|\t Epsilon \t|\t Avg ant. len.: eta: 1.0 \t|\t Rule list len.: lam: 7.0 \t|\t Training auROC \t|\t Reserve auROC ")
+    print(TABLE)
+    for j in range(len(datasets)):
+        for i in range(len(rl_labels)):
+            if i == 0:
+                rl = run(fims[j], datasets[j], labels[j], 7.0, 1.0, MCMC_REPS)
+            else:
+                rl = runDP(fims[j], datasets[j], labels[j], 7.0, 1.0, epsilons[i], MCMC_REPS)
+            print("\t" + rl_labels[i] + "\t|\t" + datasets[j] + "\t|\t" + str(epsilons[i]) + "\t|\t" +
+                  str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)) + "\t|\t" +
+                  str(auc(rl.dataset, rl)) + "\t|\t" + str(auc(readData(reserve_ds[j]), rl)))
+            rls.append(rl)
+        print(SEP)
+
+    for rl in rls:
+        rl.printNeat()
 def main():
-    rl_labels = ["Regular RL", "DP ep:.1", "DP ep:.01", "DP ep:.001"]
-    eps = [.1, .01, .001]
+    rl_labels = ["Regular RL", "DP ep:1.0", "DP ep:.5", "DP ep:.1"]
+    eps = ['_',1.0, .5, .1]
 
-    # Test: Run all rule lists on the shroom dataset and compare lengths to hyperparameters.
-    print("\tRule list\t|\tAvg ant. len.: Shroom - eta: 1.0\t|\tRule list length: Shroom - lam: 7.0")
-    print(TABLE)
-    for i in range(len(rl_labels)):
-        if i == 0:
-            rl = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 1.0, MCMC_REPS)
-        else:
-            rl = runDP("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 7.0, 1.0, eps[i-1], MCMC_REPS)
-        print("\t" + rl_labels[i] + "\t|\t" + str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)))
-    print(SEP)
-
-    # Test: Run all rule lists on reserve data from the titanic dataset to test out of training acc.
-    titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
-    print("\tRule list\t|\tTraining auROC\t|\tAccuracy OoS")
-    print(TABLE)
-    for i in range(len(rl_labels)):
-        if i == 0:
-            rl = run("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, MCMC_REPS)
-        else:
-            rl = runDP("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, eps[i-1], MCMC_REPS)
-        print("\t" + rl_labels[i] + "\t|\t" + str(accuracy(rl.dataset, rl)) + "\t|\t" + str(accOOS(titanic_res_DS, rl)))
-    print(SEP)
-
-    # Test: Run accuracy for all DP rule lists on true data from the titanic dataset to test in training acc.
-    titanic_DS = readData("../Data/kaggle_titanic_clean_train.txt")
-    print(TABLE)
-    print("\tRule list\t|\tAccuracy on unNoisey DS")
-    for i in range(len(eps)):
-        rl = runDP("../Data/titanic_fim.txt", "../Data/kaggle_titanic_clean_train.txt", "Survived", 5.0, 3.0, eps[i], MCMC_REPS)
-        print("\t" + rl_labels[i+1] + "\t|\t" + str(accOOS(titanic_DS, rl)))
-    # TODO(iamabel): need a test for different epsilon values, also need the DP solution (hahaha).
+    # Test: Run all rule lists on all dataset and compare lengths to hyperparameters, and auROC.
+    fullTest(rl_labels, eps)
 main()

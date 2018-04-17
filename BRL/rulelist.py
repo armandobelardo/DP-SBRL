@@ -39,7 +39,7 @@ class RuleList:
 
     def calcPointEstimates(self, alpha=[1,1]):
         estimates = self.pointEstimates
-        for capture in captures:
+        for capture in self.captures:
             # Note there is no worry of dividing by 0, given a nonzero alpha
             estimates.append((capture[1] + alpha[1])/(sum(capture)+sum(alpha)))
 

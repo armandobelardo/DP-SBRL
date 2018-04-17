@@ -114,7 +114,7 @@ def Q(given, alteration):
 def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
     new_rule_list, alteration = proposal(d)
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
-        return d
+        return d, False
 
     Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
     lg_alpha = (scoring(new_rule_list, lam, eta, epsilon, dp) - scoring(d, lam, eta, epsilon, dp)) + np.log(Q_factor)
@@ -164,8 +164,8 @@ def runDefault(lam, eta):
 def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
     d = RuleList(antecedents, dataset, label)
     for _ in range(loops):
-        d, _ = mcmc_mh(d, lam, eta, epsilon, True)
-    d.noisifyCaptures(epsilon)
+        d, _ = mcmc_mh(d, lam, eta, epsilon/2, True)
+    d.noisifyCaptures(epsilon/2)
     d.calcPointEstimates()
     return d
 
