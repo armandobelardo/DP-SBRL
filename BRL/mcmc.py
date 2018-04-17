@@ -57,6 +57,7 @@ def prior(d, lam, eta):
 def score(d, lam, eta):
     return prior(d, lam, eta)+likelihood(d.captures)
 
+# Notice once again this is a log score, this is why these are not e-exponentiating.
 def dp_score(d, lam, eta, epsilon):
     return (epsilon*score(d, lam, eta)) - (2*np.log(len(d.dataset)))
 
@@ -128,13 +129,13 @@ def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
             try:
                 alpha = np.exp(lg_alpha)
                 if np.random.uniform() <= alpha:
-                    return new_rule_list
+                    return new_rule_list, False
                 else:
-                    return d
+                    return d, False
             except Warning:
-                return d
+                return d, False
     else:
-        return new_rule_list
+        return new_rule_list, True
 
 
 # Note lam(bda) and eta are hyperparameters dictating length of rule list and number of conditions
@@ -143,8 +144,7 @@ def run(antecedents, dataset, label, lam, eta, loops):
     d = RuleList(antecedents, dataset, label)
     best = d
     for _ in range(loops):
-        d = mcmc_mh(d, lam, eta)
-        better = (scoring(d, lam, eta, 1, False) - scoring(best, lam, eta, 1, False)) > 0
+        d, better = mcmc_mh(d, lam, eta)
         # Note that we will check every new rule list produced that has a better score than the
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
@@ -156,8 +156,7 @@ def runDefault(lam, eta):
     d = RuleList()
     best = d
     for _ in range(LOOP_ITERATIONS):
-        d = mcmc_mh(d, lam, eta)
-        better = (scoring(d, lam, eta, 1, False) - scoring(best, lam, eta, 1, False)) > 0
+        d, better = mcmc_mh(d, lam, eta)
         best = d if better else best
     d.calcPointEstimates()
     return best
@@ -165,7 +164,7 @@ def runDefault(lam, eta):
 def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):
     d = RuleList(antecedents, dataset, label)
     for _ in range(loops):
-        d = mcmc_mh(d, lam, eta, epsilon, True)
+        d, _ = mcmc_mh(d, lam, eta, epsilon, True)
     d.noisifyCaptures(epsilon)
     d.calcPointEstimates()
     return d
