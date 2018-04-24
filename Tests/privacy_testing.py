@@ -64,9 +64,7 @@ def confidenceOfLabel1(ds, rl):
     return conf_scores
 
 def auc(ds, rl):
-    fpr, tpr, _ = metrics.roc_curve(trueLabel1(ds, rl.label), confidenceOfLabel1(ds, rl))
-    roc_auc = metrics.auc(fpr, tpr)
-    return roc_auc
+    return metrics.roc_auc_score(trueLabel1(ds, rl.label), confidenceOfLabel1(ds, rl))
 
 def accOOS(new_ds, rl):
     correct = 0.0
@@ -105,19 +103,19 @@ def regSysTest():
     print(score(d, 9.0, 1.0))
 
 def DPSysTest():
-    d = runDP("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 5.0, 1.0, .1, 1000)
-    print("DP Rule list for Shrooms:\n")
+    d = runDP("../Data/adult_fim.txt", "../Data/UCI_adult_clean.txt", ">50k", 7.0, 1.0, .1, 1000)
+    print("DP Rule list for Adult:\n")
     d.printNeat()
     print("\n_____TESTING______\n")
     print(auc(d.dataset, d))
 
 # ------------ FOR EXPERIMENTS ------------
 def avgRuns(rl_labels, epsilons):
-    datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
-    hyperparams = [[7, 1], [3, 1]]
-    reserve_ds = [readData("../Data/UCI_shroom_res.txt"), readData("../Data/kaggle_titanic_clean_res.txt")]
-    fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
-    labels = ["edible", "Survived"]
+    datasets = ["../Data/UCI_adult_clean.txt", "../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
+    hyperparams = [[7.0,1.0], [7.0, 1.0], [3.0, 1.0]]
+    reserve_ds = [readData("../Data/UCI_adult_res.txt"), readData("../Data/UCI_shroom_res.txt"), readData("../Data/kaggle_titanic_clean_res.txt")]
+    fims = ["../Data/adult_fim.txt", "../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
+    labels = [">50k", "edible", "Survived"]
 
     for j, ds in enumerate(datasets):
         print(ds)
@@ -177,4 +175,5 @@ def main():
 
     # Test: Run all rule lists on all dataset and compare lengths to hyperparameters, and auROC.
     avgRuns(rl_labels, eps)
-main()
+# main()
+DPSysTest()

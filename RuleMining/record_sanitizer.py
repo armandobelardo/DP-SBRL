@@ -72,7 +72,7 @@ def sani_titanic():
     passengers_clean.close()
 
 def sani_adult():
-    cats = {0:"Age", 1:"WorkClass", 3:"Edu.", 5:"Marital Stat.", 6:"Occ.", 8:"Race", 9:"Sex", 10:"Cap-Gain", 11:"Cap-Loss", 14:">50K"}
+    cats = {0:"Age", 1:"WorkClass", 3:"Edu.", 5:"Marital-Stat.", 6:"Occ.", 8:"Race", 9:"Sex", 10:"Cap-Gain", 11:"Cap-Loss", 14:">50K"}
     adults_clean = open("../Data/UCI_adult_clean.txt", "w+")
     adults = open("../Data/UCI-adult.data", 'r')
 
