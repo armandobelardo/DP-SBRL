@@ -70,3 +70,60 @@ def sani_titanic():
                     transaction.append(cat+"="+row[cat])
             passengers_clean.write(" ".join(transaction)+"\n")
     passengers_clean.close()
+
+def sani_adult():
+    cats = {0:"Age", 1:"WorkClass", 3:"Edu.", 5:"Marital Stat.", 6:"Occ.", 8:"Race", 9:"Sex", 10:"Cap-Gain", 11:"Cap-Loss", 14:">50K"}
+    adults_clean = open("../Data/UCI_adult_clean.txt", "w+")
+    adults = open("../Data/UCI-adult.data", 'r')
+
+    for adult in adults:
+        row = adult.strip().split(', ')
+        transaction = []
+        for i in cats:
+            # Not particularly useful to us if we can't get details on survival.
+            if row[i] == '?':
+                transaction = []
+                break
+            if cats[i] == "Age":
+                age = int(float(row[i]))
+                # We'll arbitrarily choose 4 age buckets: -12, 13-21, 22-40, 41+
+                if age <= 29:
+                    transaction.append("Age<30")
+                elif age <= 40:
+                    transaction.append("Age=30-40")
+                elif age <= 50:
+                    transaction.append("Age=41-50")
+                else:
+                    transaction.append("Age>50")
+            elif cats[i] == "Cap-Gain":
+                gain = int(float(row[i]))
+                # We'll arbitrarily choose 4 age buckets: -12, 13-21, 22-40, 41+
+                if gain == 0:
+                    transaction.append("Cap-Gain=0")
+                elif gain <= 3499:
+                    transaction.append("Cap-Gain<3500")
+                elif gain <= 7000:
+                    transaction.append("Cap-Gain=3500-7000")
+                else:
+                    transaction.append("Cap-Gain>7000")
+            elif cats[i] == "Cap-Loss":
+                loss = int(float(row[i]))
+                # We'll arbitrarily choose 4 age buckets: -12, 13-21, 22-40, 41+
+                if loss == 0:
+                    transaction.append("Cap-Loss=0")
+                elif loss <= 499:
+                    transaction.append("Cap-Loss<500")
+                elif loss <= 1500:
+                    transaction.append("Cap-Loss=500-1500")
+                else:
+                    transaction.append("Cap-Loss>1500")
+            elif i == 14:
+                if row[i] == ">50K":
+                    transaction.append(">50k")
+            else:
+                transaction.append(cats[i]+"="+row[i])
+        if len(transaction) > 0:
+            adults_clean.write(" ".join(transaction)+"\n")
+    adults.close()
+    adults_clean.close()
+sani_adult()

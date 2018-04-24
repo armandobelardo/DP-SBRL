@@ -5,11 +5,13 @@ from mcmc import *
 from rulelist import *
 from data import *
 from sklearn import metrics
+import time
 
 TABLE = "__________________________________________________________________________________________________________________________________________________________________________________________________________"
 SEP = "\n............................................................................................................................................................................................................\n"
 
 MCMC_REPS = 1000
+ACC_REPS = 5
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
 # Compare length of rule list and average length of the antecedents, compare to lambda and eta.
@@ -109,6 +111,43 @@ def DPSysTest():
     print("\n_____TESTING______\n")
     print(auc(d.dataset, d))
 
+# ------------ FOR EXPERIMENTS ------------
+def avgRuns(rl_labels, epsilons):
+    datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
+    hyperparams = [[7, 1], [3, 1]]
+    reserve_ds = [readData("../Data/UCI_shroom_res.txt"), readData("../Data/kaggle_titanic_clean_res.txt")]
+    fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
+    labels = ["edible", "Survived"]
+
+    for j, ds in enumerate(datasets):
+        print(ds)
+        for i in range(len(rl_labels)):
+            print("\t" + rl_labels[i])
+            scores_in_sample = []
+            scores_out_sample = []
+            pos_score = []
+            times = []
+            lams = []
+            etas = []
+            for _ in range(ACC_REPS):
+                start = time.time()
+                if i == 0:
+                    rl = run(fims[j], ds, labels[j], hyperparams[j][0], hyperparams[j][1], MCMC_REPS)
+                else:
+                    rl = runDP(fims[j], ds, labels[j], hyperparams[j][0], hyperparams[j][1], epsilons[i], MCMC_REPS)
+                end = time.time()
+                times.append(end-start)
+                scores_in_sample.append(auc(rl.dataset, rl))
+                scores_out_sample.append(auc(reserve_ds[j], rl))
+                pos_score.append(np.exp(score(rl, hyperparams[j][0], hyperparams[j][1])))
+                lams.append(len(rl.rules))
+                etas.append(avgAntecedentLen(rl))
+            print("\t\t AUC in -- SD: " + str(np.std(scores_in_sample)) + ", MEAN: " + str(np.mean(scores_in_sample)))
+            print("\t\t AUC out -- SD: " + str(np.std(scores_out_sample)) + ", MEAN: " + str(np.mean(scores_out_sample)))
+            print("\t\t Pos Comp -- SD: " + str(np.std(pos_score)) + ", MEAN: " + str(np.mean(pos_score)))
+            print("\t\t HYPER -- LAM: " + str(hyperparams[j][0]) + " GOT " + str(np.mean(lams)) + " -- ETA: " + str(hyperparams[j][1]) + " GOT " + str(np.mean(etas)))
+            print("\t\t AVG TIME: " + str(np.mean(times)))
+
 def fullTest(rl_labels, epsilons):
     datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
     reserve_ds = ["../Data/UCI_shroom_res.txt", "../Data/kaggle_titanic_clean_res.txt"]
@@ -128,13 +167,14 @@ def fullTest(rl_labels, epsilons):
                   str(auc(rl.dataset, rl)) + "\t|\t" + str(auc(readData(reserve_ds[j]), rl)))
             rls.append(rl)
         print(SEP)
-
+    print(TABLE)
     for rl in rls:
         rl.printNeat()
+        print(SEP)
 def main():
     rl_labels = ["Regular RL", "DP ep:1.0", "DP ep:.5", "DP ep:.1"]
     eps = ['_',1.0, .5, .1]
 
     # Test: Run all rule lists on all dataset and compare lengths to hyperparameters, and auROC.
-    fullTest(rl_labels, eps)
+    avgRuns(rl_labels, eps)
 main()

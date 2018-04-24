@@ -1,0 +1,305 @@
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Sex=Male
+Marital Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Marital Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Marital Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Female WorkClass=Private
+Age<30 Cap-Gain=0 Marital Race=White WorkClass=Private
+Cap-Gain=0 Marital Race=White Sex=Male WorkClass=Private
+Cap-Loss=0 Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Sex=Male WorkClass=Private
+Age<30 Cap-Loss=0 Marital Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Stat.=Never-married
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Sex=Female
+Cap-Gain=0 Edu.=HS-grad Marital Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad Marital Race=White
+>50k Cap-Loss=0 Marital Race=White
+Cap-Loss=0 Edu.=HS-grad Marital Sex=Male
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Female
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad Marital WorkClass=Private
+Cap-Gain=0 Marital Sex=Male WorkClass=Private
+Cap-Loss=0 Marital Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Marital Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Edu.=HS-grad Marital Race=White
+Cap-Gain=0 Race=White Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse
+Age<30 Cap-Loss=0 Marital Stat.=Never-married
+Cap-Loss=0 Marital Sex=Female WorkClass=Private
+Cap-Loss=0 Marital Race=White Sex=Male WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Sex=Female
+Cap-Gain=0 Cap-Loss=0 Marital WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Sex=Male WorkClass=Private
+Age=30-40 Cap-Gain=0 Marital Race=White
+Age=30-40 Cap-Loss=0 Marital Race=White
+Age=30-40 Cap-Gain=0 Cap-Loss=0 Race=White
+Cap-Loss=0 Edu.=HS-grad Race=White WorkClass=Private
+Marital Race=White Sex=Male WorkClass=Private
+Cap-Gain=0 Marital Race=White Stat.=Never-married
+Cap-Loss=0 Marital Sex=Male WorkClass=Private
+Age=30-40 Cap-Loss=0 Marital WorkClass=Private
+Cap-Gain=0 Marital Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Stat.=Never-married
+Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Marital Sex=Male Stat.=Married-civ-spouse
+Cap-Gain=0 Cap-Loss=0 Marital Stat.=Married-civ-spouse WorkClass=Private
+Age<30 Marital Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White
+Age=30-40 Cap-Gain=0 Cap-Loss=0 Marital
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad WorkClass=Private
+Age<30 Cap-Loss=0 Marital WorkClass=Private
+Cap-Gain=0 Marital Race=White WorkClass=Private
+Cap-Gain=0 Race=White Stat.=Married-civ-spouse WorkClass=Private
+Marital Race=White Stat.=Never-married WorkClass=Private
+Cap-Loss=0 Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Marital Race=White Stat.=Never-married
+Cap-Gain=0 Marital Sex=Female WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Sex=Male WorkClass=Private
+Marital Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Age<30 Cap-Loss=0 Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Stat.=Married-civ-spouse
+Marital Race=White Stat.=Married-civ-spouse WorkClass=Private
+Marital Race=White Sex=Male Stat.=Married-civ-spouse
+Cap-Loss=0 Marital Race=White Sex=Male
+Cap-Loss=0 Race=White Stat.=Never-married WorkClass=Private
+Cap-Loss=0 Marital Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Male
+Cap-Loss=0 Marital Sex=Male Stat.=Married-civ-spouse
+Cap-Gain=0 Race=White Sex=Male WorkClass=Private
+Cap-Loss=0 Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Marital Race=White Stat.=Married-civ-spouse
+Cap-Gain=0 Edu.=HS-grad Marital WorkClass=Private
+Age<30 Cap-Gain=0 Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Stat.=Never-married
+Cap-Loss=0 Race=White Sex=Male WorkClass=Private
+Cap-Gain=0 Race=White Sex=Male Stat.=Married-civ-spouse
+Cap-Gain=0 Edu.=HS-grad Marital Sex=Male
+Cap-Gain=0 Cap-Loss=0 Sex=Male Stat.=Married-civ-spouse
+Cap-Loss=0 Marital Race=White Sex=Female
+Cap-Gain=0 Marital Race=White Sex=Female
+Cap-Loss=0 Edu.=Some-college
+Cap-Gain=0 Marital Stat.=Married-civ-spouse
+Age<30 Cap-Gain=0 Stat.=Never-married
+Age=30-40 Marital WorkClass=Private
+>50k Marital Stat.=Married-civ-spouse
+Edu.=HS-grad WorkClass=Private
+Age=30-40 Cap-Gain=0
+Age<30 Marital WorkClass=Private
+Race=White WorkClass=Private
+Marital Sex=Male
+Cap-Gain=0 Marital Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Marital
+Cap-Gain=0 Sex=Male
+Age<30 WorkClass=Private
+Race=White Stat.=Never-married
+Cap-Gain=0 Cap-Loss=0 Race=White WorkClass=Private
+Age=30-40 Cap-Loss=0
+Age<30 Cap-Gain=0 Marital Race=White
+Cap-Loss=0 Race=White Sex=Female
+Cap-Gain=0 Cap-Loss=0 Sex=Female WorkClass=Private
+>50k Stat.=Married-civ-spouse
+Cap-Gain=0 Cap-Loss=0 Marital Race=White WorkClass=Private
+Age<30
+Age<30 Cap-Loss=0 WorkClass=Private
+Age=30-40 Marital
+Edu.=HS-grad Race=White WorkClass=Private
+Cap-Gain=0 Edu.=HS-grad
+Cap-Gain=0 Cap-Loss=0
+Cap-Gain=0 Stat.=Never-married
+Marital Stat.=Married-civ-spouse
+Age<30 Cap-Gain=0
+Marital Race=White
+Cap-Gain=0 Cap-Loss=0 Sex=Male
+Cap-Loss=0 Stat.=Never-married
+Age=30-40 Cap-Loss=0 Race=White
+Age<30 Cap-Gain=0 Marital Stat.=Never-married
+Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Marital Sex=Male
+Age=30-40 Sex=Male
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Male Stat.=Married-civ-spouse
+Age<30 Cap-Gain=0 Cap-Loss=0 WorkClass=Private
+Age=30-40 Cap-Gain=0 WorkClass=Private
+Age<30 Stat.=Never-married
+Age<30 Cap-Gain=0 Race=White
+Edu.=HS-grad Marital Race=White WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White
+Cap-Loss=0 Marital Race=White Stat.=Married-civ-spouse
+Marital Race=White Sex=Female WorkClass=Private
+Edu.=Some-college Marital
+Cap-Gain=0 Sex=Female
+Cap-Gain=0 Marital Race=White Sex=Male
+Cap-Gain=0 Cap-Loss=0 Stat.=Never-married WorkClass=Private
+Sex=Female WorkClass=Private
+Cap-Loss=0 WorkClass=Private
+Age=41-50 Cap-Loss=0
+Cap-Loss=0 Sex=Male
+Cap-Gain=0 Edu.=HS-grad Race=White
+Marital Race=White Sex=Female
+Cap-Loss=0 Marital Race=White
+Cap-Loss=0 Edu.=HS-grad Marital WorkClass=Private
+Age=41-50 Marital
+Cap-Gain=0 Race=White
+Cap-Gain=0 Edu.=HS-grad Marital Race=White
+>50k Sex=Male
+Cap-Gain=0 Cap-Loss=0 Marital Stat.=Married-civ-spouse
+Edu.=HS-grad Sex=Male
+>50k Race=White
+>50k Cap-Loss=0
+Cap-Loss=0 Marital Race=White Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Marital
+Age<30 Race=White WorkClass=Private
+Edu.=HS-grad Marital Sex=Male
+Edu.=HS-grad Race=White
+Race=White Sex=Male
+Age<30 Race=White
+Cap-Loss=0 Edu.=HS-grad Marital
+Cap-Gain=0 Race=White WorkClass=Private
+Age<30 Cap-Gain=0 Cap-Loss=0 Marital Race=White
+Cap-Loss=0 Sex=Female
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Stat.=Married-civ-spouse
+Cap-Loss=0 Race=White
+Cap-Gain=0 Cap-Loss=0 Marital Sex=Male WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad
+Cap-Gain=0 Edu.=HS-grad Race=White WorkClass=Private
+>50k Marital
+Marital Sex=Female
+Race=White Sex=Female
+Age=30-40 Cap-Gain=0 Cap-Loss=0 Marital Race=White
+Edu.=Some-college
+Marital Race=White WorkClass=Private
+Sex=Male
+Cap-Gain=0 Race=White Sex=Female
+Stat.=Married-civ-spouse
+WorkClass=Private
+Sex=Male Stat.=Married-civ-spouse
+Cap-Gain=0 Race=White Stat.=Married-civ-spouse
+Edu.=HS-grad
+Age<30 Cap-Gain=0 Cap-Loss=0 Stat.=Never-married
+Sex=Male WorkClass=Private
+Age=30-40 Marital Sex=Male
+Age=41-50
+Cap-Gain=0 Cap-Loss=0 Stat.=Married-civ-spouse WorkClass=Private
+Age<30 Marital
+Cap-Gain=0 Marital Race=White
+Cap-Gain=0 Cap-Loss=0 Sex=Female
+>50k
+Cap-Gain=0 Edu.=Some-college
+Age=30-40 Cap-Gain=0 Marital WorkClass=Private
+Edu.=HS-grad Marital
+Marital
+Race=White Stat.=Married-civ-spouse
+Age=30-40
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad Race=White
+Sex=Female
+Cap-Gain=0 Cap-Loss=0 Race=White Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse
+Race=White
+>50k Marital Sex=Male
+Race=White Sex=Male WorkClass=Private
+Race=White Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Age<30 Cap-Loss=0 Marital Race=White
+Stat.=Married-civ-spouse WorkClass=Private
+Age=30-40 Cap-Gain=0 Marital
+Age=30-40 Cap-Loss=0 WorkClass=Private
+Cap-Gain=0 Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Edu.=HS-grad WorkClass=Private
+Cap-Gain=0 Sex=Male WorkClass=Private
+Cap-Loss=0 Stat.=Married-civ-spouse
+Cap-Loss=0 Race=White WorkClass=Private
+Marital Stat.=Never-married
+Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Race=White Sex=Male Stat.=Married-civ-spouse
+Age<30 Cap-Loss=0 Stat.=Never-married
+Marital Sex=Male Stat.=Married-civ-spouse
+Marital Sex=Female WorkClass=Private
+Stat.=Never-married
+Marital Race=White Stat.=Married-civ-spouse
+Age<30 Cap-Gain=0 Cap-Loss=0
+Cap-Loss=0 Marital Race=White Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Stat.=Married-civ-spouse
+Age<30 Cap-Gain=0 Cap-Loss=0 Marital Stat.=Never-married
+Age<30 Cap-Loss=0 Marital
+Race=White Sex=Male Stat.=Married-civ-spouse
+Age=30-40 Cap-Loss=0 Marital
+Age<30 Cap-Gain=0 Cap-Loss=0 Marital WorkClass=Private
+Age<30 Cap-Gain=0 Marital WorkClass=Private
+Cap-Gain=0 Race=White Stat.=Never-married
+Cap-Gain=0 Cap-Loss=0 WorkClass=Private
+Edu.=HS-grad Marital WorkClass=Private
+Cap-Gain=0 Marital Sex=Female
+Cap-Loss=0 Edu.=HS-grad Sex=Male
+Cap-Gain=0 Marital Stat.=Never-married
+Marital Race=White Stat.=Never-married
+Cap-Gain=0 Cap-Loss=0 Race=White Sex=Male
+Cap-Loss=0 Marital Sex=Male
+Age<30 Cap-Gain=0 Cap-Loss=0 Marital
+Age<30 Cap-Loss=0
+Cap-Gain=0 Stat.=Never-married WorkClass=Private
+Age=30-40 WorkClass=Private
+Marital Race=White Sex=Male
+Marital Stat.=Married-civ-spouse WorkClass=Private
+Age=30-40 Cap-Gain=0 Cap-Loss=0
+Cap-Loss=0 Sex=Female WorkClass=Private
+Age<30 Cap-Loss=0 Race=White
+Marital Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Stat.=Married-civ-spouse
+Cap-Loss=0 Race=White Stat.=Never-married
+Cap-Loss=0 Marital Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+>50k Cap-Loss=0 Race=White
+Age<30 Cap-Gain=0 WorkClass=Private
+Cap-Loss=0 Race=White Sex=Male
+Edu.=HS-grad Marital Race=White
+Marital Sex=Male WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Race=White Stat.=Married-civ-spouse WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital Stat.=Never-married WorkClass=Private
+Cap-Gain=0 Sex=Male Stat.=Married-civ-spouse
+Cap-Loss=0 Edu.=Some-college Marital
+Cap-Gain=0
+Race=White Sex=Female WorkClass=Private
+Age=41-50 Cap-Loss=0 Marital
+Cap-Gain=0 Race=White Sex=Male
+Age<30 Cap-Gain=0 Cap-Loss=0 Race=White
+Sex=Male Stat.=Married-civ-spouse WorkClass=Private
+Cap-Loss=0 Marital Sex=Female
+Cap-Gain=0 Edu.=HS-grad Marital
+Cap-Loss=0 Race=White Stat.=Married-civ-spouse
+Age=30-40 Cap-Gain=0 Race=White
+Cap-Gain=0 Marital WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Marital
+Cap-Gain=0 Edu.=HS-grad Sex=Male
+Cap-Gain=0 WorkClass=Private
+Cap-Gain=0 Edu.=Some-college Marital
+Cap-Loss=0 Stat.=Married-civ-spouse WorkClass=Private
+Age=30-40 Marital Race=White
+Cap-Loss=0 Marital Race=White WorkClass=Private
+Cap-Loss=0 Sex=Male Stat.=Married-civ-spouse
+Cap-Loss=0 Race=White Sex=Male Stat.=Married-civ-spouse
+Cap-Loss=0 Marital WorkClass=Private
+>50k Marital Race=White
+Cap-Gain=0 Marital Race=White Stat.=Never-married WorkClass=Private
+Cap-Loss=0 Marital Stat.=Never-married
+>50k Cap-Loss=0 Marital
+Cap-Loss=0 Marital Stat.=Married-civ-spouse
+Cap-Loss=0 Edu.=HS-grad Marital Race=White WorkClass=Private
+Age=30-40 Race=White
+Cap-Loss=0 Edu.=HS-grad Race=White
+Age<30 Marital Stat.=Never-married
+Cap-Loss=0 Edu.=HS-grad WorkClass=Private
+Age<30 Marital Race=White
+Cap-Loss=0
+Cap-Loss=0 Sex=Male WorkClass=Private
+Cap-Loss=0 Stat.=Never-married WorkClass=Private
+Cap-Loss=0 Edu.=HS-grad
+Cap-Gain=0 Sex=Female WorkClass=Private
+Cap-Gain=0 Cap-Loss=0 Edu.=HS-grad Marital
+Marital WorkClass=Private
+Age<30 Cap-Gain=0 Marital
+Cap-Gain=0 Cap-Loss=0 Stat.=Never-married
