@@ -1,316 +1,409 @@
-stalk-color-below-ring=white veil-color=white
-gill-size=narrow spore-print-color=white
-cap-surface=smooth stalk-color-below-ring=white
-ring-type=evanescent stalk-color-above-ring=white
-gill-spacing=close stalk-color-below-ring=white
-stalk-color-below-ring=white stalk-shape=enlarging
-population=several spore-print-color=white
-gill-attachment=free spore-print-color=white
-spore-print-color=white veil-color=white
-gill-spacing=close odor=foul
-gill-attachment=free ring-number=one
-stalk-color-above-ring=white stalk-color-below-ring=white
-ring-number=one spore-print-color=white
-stalk-root=missing veil-color=white
-ring-type=evanescent spore-print-color=white
-gill-size=narrow population=several
-bruises edible
-gill-size=narrow veil-color=white
-gill-spacing=close ring-type=pendant
-gill-size=narrow stalk-root=missing
-population=several veil-type=partial
-stalk-surface-below-ring=smooth veil-type=partial
-cap-shape=convex gill-size=broad
-cap-color=gray veil-type=partial
-stalk-color-above-ring=pink veil-type=partial
-ring-type=evanescent veil-type=partial
-gill-spacing=close stalk-shape=enlarging
-habitat=grasses veil-color=white
-cap-surface=scaly veil-type=partial
-edible veil-type=partial
-ring-type=evanescent stalk-shape=tapering
-odor=none veil-type=partial
-gill-size=broad habitat=grasses
-gill-size=broad stalk-color-above-ring=white
-stalk-color-above-ring=white veil-type=partial
-veil-color=white veil-type=partial
-gill-size=narrow gill-spacing=close
-bruises stalk-surface-above-ring=smooth
-gill-spacing=close veil-type=partial
-stalk-shape=tapering veil-type=partial
-cap-surface=smooth gill-attachment=free
-habitat=woods stalk-surface-below-ring=smooth
-stalk-surface-below-ring=silky veil-type=partial
-stalk-color-below-ring=white veil-type=partial
-gill-attachment=free stalk-surface-above-ring=silky
-habitat=woods population=several
-population=several ring-type=evanescent
-gill-attachment=free odor=foul
-odor=foul veil-color=white
-gill-attachment=free spore-print-color=black
-ring-number=one stalk-color-above-ring=white
-cap-shape=convex gill-attachment=free
-cap-surface=smooth veil-type=partial
-cap-surface=scaly veil-color=white
-cap-shape=convex stalk-root=bulbous
-cap-shape=convex stalk-color-below-ring=white
-cap-shape=convex veil-color=white
-spore-print-color=white veil-type=partial
-stalk-root=bulbous stalk-shape=tapering
-cap-shape=convex stalk-shape=tapering
-cap-shape=convex stalk-surface-below-ring=smooth
-stalk-shape=tapering stalk-surface-above-ring=smooth
-gill-spacing=close stalk-surface-above-ring=silky
-gill-spacing=close stalk-surface-below-ring=silky
-gill-spacing=close ring-type=evanescent
-cap-surface=fibrous veil-type=partial
-stalk-surface-above-ring=silky veil-type=partial
-ring-number=one stalk-color-below-ring=pink
-population=several ring-number=one
-ring-number=one ring-type=evanescent
-gill-size=narrow ring-type=evanescent
-stalk-shape=enlarging stalk-surface-above-ring=smooth
-cap-shape=flat veil-type=partial
-gill-spacing=close odor=none
-ring-number=one stalk-root=bulbous
-cap-shape=flat ring-number=one
-bruises veil-color=white
-bruises odor=none
-gill-attachment=free stalk-surface-above-ring=smooth
-cap-shape=convex edible
-bruises gill-size=broad
-cap-surface=scaly ring-number=one
-population=several stalk-root=bulbous
-gill-spacing=close spore-print-color=white
-bruises veil-type=partial
-habitat=woods veil-color=white
-bruises stalk-root=bulbous
-bruises ring-number=one
-odor=foul veil-type=partial
-cap-surface=fibrous veil-color=white
-cap-shape=convex ring-type=pendant
-gill-attachment=free stalk-shape=tapering
-cap-color=brown ring-number=one
-odor=none veil-color=white
-stalk-shape=tapering veil-color=white
-gill-attachment=free odor=none
-edible stalk-shape=tapering
-cap-color=gray veil-color=white
-gill-size=broad population=several
-ring-number=one stalk-shape=enlarging
-bruises habitat=woods
-bruises stalk-surface-below-ring=smooth
-ring-number=one stalk-shape=tapering
-gill-attachment=free stalk-color-below-ring=white
-spore-print-color=black veil-color=white
-habitat=grasses ring-number=one
-cap-shape=convex stalk-color-above-ring=white
-ring-number=one veil-color=white
-gill-size=broad ring-number=one
-gill-spacing=close stalk-surface-above-ring=smooth
-cap-surface=fibrous gill-attachment=free
-bruises stalk-color-above-ring=white
-ring-number=one stalk-surface-above-ring=silky
-gill-spacing=close veil-color=white
-bruises stalk-shape=tapering
-bruises gill-spacing=close
-ring-number=one stalk-color-above-ring=pink
-habitat=woods stalk-surface-above-ring=smooth
-gill-size=broad stalk-shape=tapering
-spore-print-color=white stalk-root=missing
-gill-spacing=close population=several
-gill-attachment=free veil-color=white
-gill-size=narrow stalk-shape=tapering
-habitat=woods veil-type=partial
-habitat=grasses veil-type=partial
-gill-spacing=close stalk-root=missing
-gill-attachment=free stalk-root=missing
-stalk-color-below-ring=white stalk-shape=tapering
-gill-size=narrow ring-number=one
-odor=none stalk-shape=tapering
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white
+gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one veil-color=white veil-type=partial
+edible gill-attachment=free gill-size=broad ring-number=one veil-color=white veil-type=partial
+edible gill-attachment=free stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+edible gill-size=broad ring-number=one veil-color=white veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+gill-attachment=free gill-size=broad gill-spacing=close stalk-root=bulbous veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-color=white
+ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close stalk-root=bulbous veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad ring-number=one veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-color-above-ring=white veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous
+edible gill-attachment=free gill-size=broad ring-number=one veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-root=bulbous veil-type=partial
+edible gill-attachment=free gill-size=broad ring-number=one veil-color=white
+gill-attachment=free gill-spacing=close stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-shape=tapering veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+cap-shape=convex gill-attachment=free ring-number=one veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one veil-color=white veil-type=partial
+gill-attachment=free population=several ring-number=one veil-color=white veil-type=partial
+edible gill-attachment=free gill-size=broad veil-color=white veil-type=partial
+gill-attachment=free ring-type=pendant stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white
+gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-type=partial
+gill-size=broad ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free gill-spacing=close ring-type=pendant veil-color=white veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+edible gill-attachment=free stalk-surface-above-ring=smooth veil-type=partial
+stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+cap-shape=convex ring-number=one veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close stalk-root=bulbous veil-color=white
+gill-attachment=free population=several ring-number=one veil-color=white
+edible gill-attachment=free gill-size=broad ring-number=one
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-spacing=close stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-color=white
+gill-size=broad stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-shape=tapering veil-color=white
+gill-attachment=free ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-type=partial
+gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white
+gill-attachment=free ring-number=one ring-type=pendant stalk-surface-above-ring=smooth
+gill-attachment=free ring-number=one stalk-color-below-ring=white veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+gill-spacing=close ring-number=one veil-color=white veil-type=partial
+ring-number=one stalk-color-below-ring=white veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-above-ring=smooth
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one veil-color=white
+bruises gill-attachment=free gill-spacing=close veil-type=partial
+gill-attachment=free ring-type=pendant stalk-surface-above-ring=smooth veil-color=white
+ring-number=one ring-type=pendant stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free ring-type=pendant stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant veil-color=white
+gill-attachment=free stalk-root=bulbous veil-color=white veil-type=partial
+ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-spacing=close stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-root=bulbous veil-type=partial
+bruises stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-root=bulbous
+edible gill-attachment=free gill-size=broad veil-type=partial
+gill-size=broad gill-spacing=close stalk-root=bulbous veil-color=white
+gill-attachment=free ring-type=pendant veil-color=white veil-type=partial
+bruises gill-attachment=free gill-spacing=close veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad ring-number=one stalk-root=bulbous
+gill-attachment=free gill-size=broad stalk-root=bulbous veil-color=white
+gill-size=broad ring-number=one stalk-root=bulbous veil-color=white
+gill-spacing=close ring-number=one stalk-root=bulbous veil-type=partial
+ring-number=one stalk-shape=tapering veil-color=white veil-type=partial
+ring-number=one ring-type=pendant veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close veil-color=white
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one
+gill-attachment=free gill-spacing=close ring-type=pendant veil-color=white
+gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+gill-attachment=free gill-size=broad ring-number=one stalk-root=bulbous veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close ring-number=one veil-color=white
+bruises gill-attachment=free gill-spacing=close veil-color=white
+gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one veil-color=white
+cap-shape=convex gill-attachment=free ring-number=one veil-color=white
+gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+gill-size=broad gill-spacing=close veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-below-ring=smooth veil-color=white
+gill-attachment=free stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+edible gill-attachment=free stalk-surface-above-ring=smooth veil-color=white
+gill-size=broad stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-color-below-ring=white veil-color=white
+edible gill-attachment=free ring-number=one veil-type=partial
+edible stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-size=broad ring-number=one stalk-root=bulbous veil-type=partial
+edible gill-attachment=free veil-color=white veil-type=partial
+population=several ring-number=one veil-color=white veil-type=partial
+gill-attachment=free ring-number=one stalk-color-above-ring=white veil-type=partial
+ring-number=one stalk-color-above-ring=white veil-color=white veil-type=partial
+gill-attachment=free stalk-color-above-ring=white veil-color=white veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close stalk-root=bulbous
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth veil-color=white
+edible gill-attachment=free ring-number=one veil-color=white
+gill-attachment=free population=several veil-color=white veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+gill-attachment=free ring-number=one stalk-shape=tapering veil-type=partial
+gill-size=broad gill-spacing=close ring-number=one veil-type=partial
+ring-number=one stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+bruises gill-attachment=free stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free gill-size=broad veil-color=white veil-type=partial
+gill-attachment=free population=several ring-number=one veil-type=partial
+gill-attachment=free ring-number=one veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close stalk-root=bulbous veil-type=partial
+cap-shape=convex gill-attachment=free veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad gill-spacing=close ring-number=one veil-type=partial
+gill-attachment=free ring-number=one stalk-color-above-ring=white veil-color=white
 edible stalk-surface-above-ring=smooth
-ring-type=pendant stalk-surface-below-ring=smooth
-stalk-color-below-ring=pink veil-type=partial
-ring-number=one stalk-surface-above-ring=smooth
-cap-surface=fibrous gill-size=broad
-stalk-root=bulbous stalk-surface-above-ring=smooth
-spore-print-color=black veil-type=partial
-ring-type=pendant stalk-shape=tapering
-gill-spacing=close stalk-shape=tapering
-ring-type=pendant stalk-shape=enlarging
-odor=none stalk-color-below-ring=white
-stalk-color-above-ring=white stalk-surface-below-ring=smooth
-cap-shape=flat stalk-shape=tapering
-odor=none stalk-surface-above-ring=smooth
-ring-type=pendant stalk-color-below-ring=white
-gill-attachment=free gill-size=narrow
-gill-attachment=free stalk-surface-below-ring=silky
-stalk-color-above-ring=white stalk-shape=tapering
-cap-color=brown veil-type=partial
-bruises gill-attachment=free
-gill-attachment=free habitat=grasses
-stalk-color-below-ring=white stalk-surface-below-ring=smooth
-stalk-color-above-ring=white veil-color=white
-stalk-surface-above-ring=smooth veil-type=partial
-stalk-surface-above-ring=silky veil-color=white
-stalk-color-below-ring=white stalk-surface-above-ring=smooth
-stalk-surface-below-ring=silky veil-color=white
-gill-size=broad stalk-surface-above-ring=smooth
-cap-shape=convex ring-number=one
-odor=none ring-type=pendant
-ring-type=pendant stalk-surface-above-ring=smooth
-gill-size=broad veil-type=partial
-stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
-odor=none stalk-color-above-ring=white
-population=several stalk-shape=tapering
-gill-attachment=free ring-type=evanescent
-cap-color=gray gill-attachment=free
-stalk-surface-above-ring=smooth veil-color=white
-stalk-color-above-ring=white stalk-surface-above-ring=smooth
-cap-surface=scaly stalk-surface-above-ring=smooth
-stalk-shape=tapering stalk-surface-below-ring=smooth
-edible habitat=woods
-gill-attachment=free stalk-color-above-ring=pink
-population=several stalk-surface-above-ring=smooth
-stalk-root=bulbous veil-type=partial
-ring-type=pendant stalk-root=bulbous
-ring-number=one spore-print-color=black
-spore-print-color=brown veil-type=partial
-gill-size=broad veil-color=white
-cap-shape=flat stalk-surface-above-ring=smooth
-odor=foul ring-number=one
-gill-attachment=free gill-size=broad
-cap-surface=smooth stalk-color-above-ring=white
-ring-number=one veil-type=partial
-ring-number=one stalk-color-below-ring=white
-edible stalk-color-below-ring=white
-odor=none ring-number=one
-ring-type=pendant veil-color=white
-cap-color=brown veil-color=white
-ring-number=one spore-print-color=brown
-cap-surface=fibrous ring-number=one
-ring-number=one stalk-surface-below-ring=silky
-population=several stalk-surface-below-ring=smooth
-ring-number=one ring-type=pendant
-gill-attachment=free veil-type=partial
-cap-shape=convex veil-type=partial
-gill-spacing=close ring-number=one
-ring-number=one stalk-surface-below-ring=smooth
-odor=none stalk-surface-below-ring=smooth
-odor=none stalk-root=bulbous
-spore-print-color=brown veil-color=white
-gill-attachment=free spore-print-color=brown
-gill-size=broad ring-type=pendant
-edible gill-spacing=close
-gill-size=broad stalk-shape=enlarging
-gill-attachment=free stalk-color-below-ring=pink
-gill-size=broad gill-spacing=close
-gill-size=broad stalk-surface-below-ring=smooth
-cap-shape=flat gill-size=broad
-gill-size=broad stalk-root=bulbous
-edible gill-size=broad
-population=several stalk-root=missing
-cap-surface=scaly gill-size=broad
-ring-type=pendant stalk-color-above-ring=white
-edible ring-type=pendant
-habitat=woods ring-type=pendant
 gill-attachment=free ring-type=pendant
-cap-color=brown gill-attachment=free
-stalk-shape=enlarging veil-color=white
-stalk-color-above-ring=white stalk-shape=enlarging
-gill-attachment=free stalk-shape=enlarging
-cap-surface=smooth gill-spacing=close
-ring-type=evanescent stalk-root=missing
-cap-surface=scaly gill-spacing=close
+ring-number=one ring-type=pendant
+gill-attachment=free stalk-shape=tapering
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+edible veil-type=partial
+bruises gill-spacing=close veil-type=partial
+gill-size=broad veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close veil-type=partial
+ring-number=one stalk-surface-below-ring=smooth veil-color=white
+gill-size=broad veil-color=white
+population=several ring-number=one
+gill-attachment=free veil-color=white
+stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+bruises gill-attachment=free
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth
+edible gill-size=broad
+gill-spacing=close ring-type=pendant veil-color=white veil-type=partial
+gill-attachment=free gill-size=broad
+ring-type=pendant veil-color=white
+gill-attachment=free ring-number=one stalk-surface-below-ring=smooth veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+gill-attachment=free gill-spacing=close stalk-surface-below-ring=smooth
+gill-attachment=free ring-number=one stalk-root=bulbous veil-color=white
+ring-number=one stalk-root=bulbous
 gill-attachment=free gill-spacing=close
-gill-spacing=close stalk-color-below-ring=pink
-habitat=woods stalk-root=bulbous
-cap-shape=flat stalk-surface-below-ring=smooth
-stalk-surface-below-ring=smooth veil-color=white
-stalk-root=bulbous stalk-surface-below-ring=smooth
-edible stalk-surface-below-ring=smooth
-gill-attachment=free stalk-surface-below-ring=smooth
-cap-shape=flat veil-color=white
-stalk-color-below-ring=pink veil-color=white
-cap-shape=flat gill-attachment=free
+gill-size=broad stalk-surface-above-ring=smooth
+edible gill-attachment=free ring-number=one veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close stalk-root=bulbous veil-type=partial
+gill-size=broad gill-spacing=close
+gill-attachment=free ring-number=one stalk-surface-below-ring=smooth veil-color=white
 stalk-root=bulbous veil-color=white
-edible veil-color=white
-gill-attachment=free stalk-root=bulbous
-ring-type=evanescent veil-color=white
-stalk-color-above-ring=pink veil-color=white
-population=several veil-color=white
-edible stalk-root=bulbous
-edible stalk-color-above-ring=white
-gill-attachment=free stalk-color-above-ring=white
-population=several stalk-color-above-ring=white
-edible gill-attachment=free
-gill-attachment=free habitat=woods
-cap-surface=scaly population=several
-gill-attachment=free population=several
-cap-shape=convex stalk-surface-above-ring=smooth
-cap-color=gray
-cap-shape=convex gill-spacing=close
-stalk-shape=tapering
-bruises
-stalk-surface-above-ring=smooth
-stalk-root=missing
-bruises ring-type=pendant
-ring-number=one
-stalk-shape=enlarging
-habitat=woods ring-number=one
-stalk-surface-above-ring=silky
-stalk-color-below-ring=white
-gill-spacing=close stalk-surface-below-ring=smooth
-cap-shape=convex
-cap-surface=scaly stalk-surface-below-ring=smooth
-gill-attachment=free
-cap-surface=smooth ring-number=one
-gill-size=broad odor=none
-spore-print-color=black
-gill-spacing=close stalk-color-above-ring=white
-habitat=grasses
-odor=foul
-veil-type=partial
-gill-spacing=close stalk-root=bulbous
-gill-size=narrow
-cap-surface=fibrous
-gill-size=broad habitat=woods
-population=several
-spore-print-color=white
-cap-surface=smooth
-odor=none
-spore-print-color=brown
-gill-size=broad stalk-color-below-ring=white
-stalk-surface-below-ring=silky
-stalk-root=bulbous
-stalk-shape=enlarging veil-type=partial
-stalk-root=missing veil-type=partial
-cap-color=brown gill-spacing=close
-cap-shape=flat gill-spacing=close
-gill-size=broad
-habitat=woods stalk-shape=tapering
-edible odor=none
-cap-surface=smooth veil-color=white
-ring-type=pendant
+gill-attachment=free gill-spacing=close ring-type=pendant veil-type=partial
 edible ring-number=one
-cap-color=brown
+gill-attachment=free gill-size=broad gill-spacing=close veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-below-ring=smooth
+ring-number=one stalk-shape=tapering
+population=several veil-type=partial
+ring-number=one stalk-color-above-ring=white
+gill-spacing=close veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-above-ring=smooth
+gill-attachment=free ring-number=one stalk-shape=tapering
+gill-spacing=close veil-color=white
+stalk-color-above-ring=white veil-type=partial
+gill-spacing=close population=several
+edible gill-attachment=free veil-color=white
+gill-attachment=free gill-size=broad stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free stalk-surface-below-ring=smooth
+stalk-color-below-ring=white veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-spacing=close stalk-surface-above-ring=smooth
+ring-number=one stalk-root=bulbous veil-color=white
+stalk-surface-below-ring=smooth veil-type=partial
+stalk-shape=tapering veil-type=partial
+cap-shape=convex gill-attachment=free veil-color=white
+gill-spacing=close ring-number=one
+ring-number=one stalk-surface-below-ring=smooth veil-type=partial
+veil-color=white veil-type=partial
+gill-spacing=close stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free ring-number=one
+bruises veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-attachment=free stalk-color-above-ring=white veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-type=partial
+cap-shape=convex gill-attachment=free
+gill-attachment=free stalk-surface-above-ring=smooth
+gill-attachment=free gill-size=broad gill-spacing=close
+gill-size=broad gill-spacing=close ring-number=one stalk-root=bulbous
+stalk-color-above-ring=white veil-color=white
+gill-size=broad stalk-root=bulbous
+ring-type=pendant stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free population=several
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+ring-type=pendant stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-type=partial
+veil-type=partial
+ring-number=one veil-color=white
+gill-attachment=free gill-size=broad veil-color=white
+gill-attachment=free veil-type=partial
+edible gill-attachment=free
+gill-attachment=free stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free stalk-color-above-ring=white
+cap-shape=convex veil-color=white
+gill-attachment=free gill-spacing=close veil-color=white
+edible veil-color=white
+gill-size=broad gill-spacing=close veil-color=white
+gill-attachment=free veil-color=white veil-type=partial
+population=several veil-color=white
+bruises gill-spacing=close
+stalk-surface-below-ring=smooth veil-color=white
+gill-size=broad ring-number=one veil-color=white veil-type=partial
+stalk-shape=tapering veil-color=white
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth
+ring-number=one ring-type=pendant stalk-surface-above-ring=smooth
+cap-shape=convex ring-number=one
+ring-number=one stalk-color-above-ring=white veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-below-ring=smooth
+stalk-surface-above-ring=smooth veil-type=partial
+gill-spacing=close stalk-surface-below-ring=smooth veil-color=white
+ring-number=one stalk-color-below-ring=white
+gill-attachment=free gill-size=broad ring-number=one stalk-root=bulbous veil-type=partial
+gill-size=broad stalk-surface-above-ring=smooth veil-type=partial
+gill-spacing=close stalk-root=bulbous veil-color=white
+bruises gill-spacing=close veil-color=white veil-type=partial
+gill-spacing=close ring-type=pendant
+bruises stalk-surface-above-ring=smooth
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+gill-attachment=free stalk-surface-above-ring=smooth veil-type=partial
+bruises
+stalk-root=bulbous veil-type=partial
+gill-attachment=free gill-spacing=close stalk-surface-above-ring=smooth veil-type=partial
+stalk-shape=tapering
+gill-spacing=close veil-color=white veil-type=partial
+population=several
+edible gill-attachment=free gill-size=broad veil-color=white
+ring-number=one stalk-surface-below-ring=smooth
+gill-size=broad
 gill-spacing=close
-ring-number=one stalk-root=missing
-stalk-color-above-ring=white
-stalk-surface-below-ring=smooth
-gill-size=narrow veil-type=partial
-cap-shape=flat
-gill-spacing=close habitat=woods
-veil-color=white
-bruises stalk-color-below-ring=white
-habitat=woods odor=none
-edible
-habitat=woods
+bruises gill-attachment=free veil-color=white veil-type=partial
+stalk-color-below-ring=white
+cap-shape=convex
+gill-attachment=free stalk-root=bulbous
+bruises veil-type=partial
+ring-type=pendant stalk-surface-above-ring=smooth
+gill-attachment=free gill-size=broad ring-number=one
+gill-attachment=free stalk-surface-above-ring=smooth veil-color=white
+ring-number=one
+edible ring-number=one veil-type=partial
+gill-attachment=free gill-size=broad ring-number=one veil-color=white
+gill-attachment=free
+stalk-color-above-ring=white veil-color=white veil-type=partial
 ring-type=pendant veil-type=partial
-cap-surface=scaly
-gill-spacing=close stalk-color-above-ring=pink
-cap-surface=scaly gill-attachment=free
-ring-type=evanescent
-stalk-surface-above-ring=silky stalk-surface-below-ring=silky
-stalk-color-above-ring=pink
-stalk-color-below-ring=pink
+stalk-shape=tapering veil-color=white veil-type=partial
+stalk-color-below-ring=white veil-color=white
+ring-type=pendant
+gill-attachment=free gill-spacing=close veil-color=white veil-type=partial
+stalk-surface-below-ring=smooth
+gill-attachment=free gill-spacing=close stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free gill-size=broad ring-number=one veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth
+bruises stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one stalk-root=bulbous veil-color=white
+stalk-color-above-ring=white
+gill-size=broad stalk-surface-above-ring=smooth veil-color=white
+stalk-root=bulbous
+bruises veil-color=white
+stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+edible gill-size=broad ring-number=one veil-color=white
+gill-size=broad stalk-root=bulbous veil-type=partial
+gill-attachment=free ring-type=pendant veil-color=white
+gill-attachment=free ring-number=one veil-type=partial
+bruises gill-attachment=free stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+bruises gill-attachment=free gill-spacing=close
+gill-attachment=free stalk-color-below-ring=white veil-color=white veil-type=partial
+gill-attachment=free stalk-color-below-ring=white veil-color=white
+gill-attachment=free gill-size=broad ring-number=one stalk-root=bulbous veil-color=white
+edible ring-number=one veil-color=white veil-type=partial
+gill-size=broad gill-spacing=close ring-number=one
+gill-spacing=close ring-number=one stalk-root=bulbous
+ring-number=one stalk-surface-above-ring=smooth veil-type=partial
+gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+gill-attachment=free ring-number=one stalk-root=bulbous
+gill-spacing=close ring-type=pendant veil-color=white
+gill-spacing=close stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+gill-spacing=close ring-type=pendant veil-type=partial
+gill-attachment=free ring-number=one stalk-surface-below-ring=smooth
+gill-attachment=free population=several veil-color=white
+gill-size=broad stalk-root=bulbous veil-color=white
+ring-type=pendant stalk-surface-above-ring=smooth veil-color=white
+ring-number=one stalk-color-below-ring=white veil-color=white
+ring-type=pendant veil-color=white veil-type=partial
+stalk-color-below-ring=white veil-color=white veil-type=partial
+gill-attachment=free gill-spacing=close ring-number=one
+cap-shape=convex ring-number=one veil-type=partial
+gill-attachment=free gill-size=broad stalk-root=bulbous veil-type=partial
+gill-attachment=free ring-type=pendant stalk-surface-above-ring=smooth
+gill-size=broad veil-color=white veil-type=partial
+bruises gill-attachment=free veil-color=white
+edible gill-attachment=free gill-size=broad
+gill-spacing=close ring-number=one stalk-surface-below-ring=smooth veil-color=white
+gill-size=broad ring-number=one veil-color=white
+ring-number=one ring-type=pendant veil-color=white
+ring-number=one stalk-shape=tapering veil-color=white
+edible gill-attachment=free stalk-surface-above-ring=smooth
+gill-attachment=free stalk-color-below-ring=white veil-type=partial
+gill-attachment=free ring-number=one ring-type=pendant
+edible gill-size=broad veil-type=partial
+gill-spacing=close stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+edible gill-attachment=free ring-number=one
+gill-attachment=free gill-spacing=close ring-number=one stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free gill-size=broad stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free stalk-shape=tapering veil-type=partial
+edible ring-number=one veil-color=white
+edible stalk-surface-above-ring=smooth veil-type=partial
+gill-size=broad ring-number=one veil-type=partial
+population=several veil-color=white veil-type=partial
+ring-number=one veil-type=partial
+cap-shape=convex veil-type=partial
+gill-spacing=close ring-number=one veil-color=white
+gill-attachment=free stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth
+ring-number=one stalk-color-above-ring=white veil-type=partial
+gill-size=broad ring-number=one stalk-root=bulbous
+stalk-surface-below-ring=smooth veil-color=white veil-type=partial
+stalk-surface-above-ring=smooth veil-color=white
+stalk-surface-above-ring=smooth veil-color=white veil-type=partial
+ring-number=one stalk-root=bulbous veil-type=partial
+stalk-surface-above-ring=smooth
+gill-size=broad gill-spacing=close stalk-root=bulbous
+bruises gill-spacing=close veil-color=white
+gill-spacing=close stalk-surface-above-ring=smooth veil-color=white
+bruises gill-attachment=free stalk-surface-above-ring=smooth veil-type=partial
+edible gill-size=broad ring-number=one
+gill-attachment=free population=several ring-number=one
+cap-shape=convex gill-attachment=free ring-number=one
+gill-spacing=close ring-number=one veil-type=partial
+gill-attachment=free stalk-color-below-ring=white
+bruises gill-attachment=free stalk-surface-above-ring=smooth
+bruises gill-attachment=free veil-type=partial
+cap-shape=convex ring-number=one veil-color=white
+gill-attachment=free gill-spacing=close ring-number=one veil-type=partial
+gill-spacing=close stalk-root=bulbous veil-type=partial
+edible
+bruises stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free ring-number=one stalk-color-below-ring=white veil-color=white veil-type=partial
+gill-size=broad ring-number=one
+gill-attachment=free gill-size=broad stalk-surface-above-ring=smooth
+stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+ring-number=one ring-type=pendant veil-type=partial
+gill-attachment=free stalk-color-above-ring=white veil-type=partial
+gill-attachment=free population=several veil-type=partial
+ring-number=one stalk-surface-above-ring=smooth veil-color=white
+edible gill-attachment=free veil-type=partial
+gill-attachment=free stalk-shape=tapering veil-color=white veil-type=partial
+ring-number=one veil-color=white veil-type=partial
+edible gill-size=broad veil-color=white
+gill-spacing=close stalk-surface-below-ring=smooth
+ring-number=one stalk-color-below-ring=white veil-type=partial
+ring-number=one stalk-shape=tapering veil-type=partial
+gill-spacing=close stalk-surface-above-ring=smooth veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-color=white
+edible stalk-surface-above-ring=smooth veil-color=white
+gill-attachment=free stalk-surface-below-ring=smooth veil-color=white
+cap-shape=convex veil-color=white veil-type=partial
+gill-attachment=free stalk-root=bulbous veil-type=partial
+gill-spacing=close stalk-root=bulbous
+cap-shape=convex gill-attachment=free veil-type=partial
+gill-attachment=free gill-size=broad veil-type=partial
+gill-attachment=free stalk-surface-above-ring=smooth stalk-surface-below-ring=smooth veil-type=partial
+gill-attachment=free stalk-shape=tapering veil-color=white
+gill-spacing=close population=several veil-type=partial
+gill-attachment=free gill-spacing=close veil-type=partial
+gill-size=broad gill-spacing=close ring-number=one veil-color=white veil-type=partial
+edible gill-size=broad veil-color=white veil-type=partial
+gill-attachment=free ring-number=one veil-color=white
+cap-shape=convex gill-attachment=free ring-number=one veil-type=partial
+edible gill-size=broad ring-number=one veil-type=partial
+gill-attachment=free ring-number=one stalk-color-above-ring=white
+population=several ring-number=one veil-color=white
+gill-attachment=free gill-size=broad stalk-root=bulbous
+edible veil-color=white veil-type=partial
+gill-attachment=free stalk-root=bulbous veil-color=white
+gill-attachment=free gill-spacing=close ring-type=pendant
+gill-attachment=free gill-spacing=close stalk-root=bulbous
+veil-color=white
+population=several ring-number=one veil-type=partial
+gill-attachment=free ring-number=one stalk-color-below-ring=white
+stalk-root=bulbous veil-color=white veil-type=partial
+gill-attachment=free ring-type=pendant veil-type=partial

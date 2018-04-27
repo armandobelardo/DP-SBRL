@@ -5,6 +5,8 @@ from mcmc import *
 from rulelist import *
 from data import *
 from sklearn import metrics
+sys.path.append("../Data/Graphs")
+from figurer import *
 import time
 
 TABLE = "__________________________________________________________________________________________________________________________________________________________________________________________________________"
@@ -24,17 +26,6 @@ def avgAntecedentLen(rl):
         count += len(rule)
     return float(count)/len(rl.rules)
 
-def proximity(d, pd, lam, eta):
-    avgAntD = avgAntecedentLen(d)
-    avgAntPD = avgAntecedentLen(pd)
-    d_closer_lam = math.fabs(len(d.rules)-lam) < math.fabs(len(pd.rules)-lam)
-    d_closer_eta = math.fabs(avgAntD - eta) < math.fabs(avgAntPD - eta)
-
-    print(("d" if d_closer_lam else "pd") + " is more 'readable' WRT lambda with a length " +
-          (len(d.rules) if d_closer_lam else len(pd.rules)) + ", closer to our lambda: "+ str(lam))
-    print(("d" if d_closer_eta else "pd") + " is more 'readable' WRT eta with an average antecedent length (" +
-          (avgAntD if d_closer_eta else avgAntPD) + ", closer to our eta: "+ str(eta) + '\n')
-
 def trueLabel1(ds, label):
     labels = []
     for transaction in ds:
@@ -45,74 +36,83 @@ def trueLabel1(ds, label):
     return labels
 
 def confidenceOfLabel1(ds, rl):
-    rule_conf = []
     conf_scores = []
-    for capture in rl.captures:
-        probability = 0.0 if sum(capture) == 0 else float(capture[1])/sum(capture)
-        rule_conf.append(probability)
-
     for transaction in ds:
         added = False
         for i, rule in enumerate(rl.rules):
             if set(rule).issubset(transaction):
                 added = True
-                conf_scores.append(rule_conf[i])
+                conf_scores.append(rl.pointEstimates[i])
                 break
         # Default rule, transaction is not captured by any other rule.
         if not added:
-            conf_scores.append(rule_conf[-1])
+            conf_scores.append(rl.pointEstimates[-1])
     return conf_scores
 
 def auc(ds, rl):
     return metrics.roc_auc_score(trueLabel1(ds, rl.label), confidenceOfLabel1(ds, rl))
 
-def accOOS(new_ds, rl):
-    correct = 0.0
-    rule_conf = []
-    for capture in rl.captures:
-        probability = 0.0 if sum(capture) == 0 else float(capture[1])/sum(capture)
-        rule_conf.append(probability)
+def MCMC_conv():
+    MCMC_iters = 2000
+    burn_in = 100     # Burn in
+    window = 250    # Window of runs
+    eps = ['_',.9, .5, .1, .01]
+    hyperparams = [[7.0, 1.0], [3.0, 1.0]]
+    multipliers = [2,1]
+    datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
+    fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
+    labels = ["edible", "Survived"]
 
-    for transaction in new_ds:
-        for i, rule in enumerate(rl.rules):
-            if set(rule).issubset(transaction):
-                # Verify that the rule states the labels presence and it is there or the opposite.
-                if (rule_conf[i] >= .5 and (rl.label in transaction)) or (rule_conf[i] < .5 and (rl.label not in transaction)):
-                    correct += 1
-                break
-    return correct / len(new_ds)
+    for i, ds in enumerate(datasets):
+        all_scores = []
+        all_true_scores = []
+        for j, ep in enumerate(eps):
+            rl = RuleList(fims[i], ds, labels[i])
+            for _ in range(burn_in * multipliers[i]):
+                if ep == '_':
+                    rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1])
+                else:
+                    rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], ep, True)
 
-def runTitanicReserve(titanic_rl, priv_titanic_rl):
-    titanic_res_DS = readData("../Data/kaggle_titanic_clean_res.txt")
-    d_ac = auc(titanic_res_DS, titanic_rl)
-    pd_ac = auc(titanic_res_DS, priv_titanic_rl)
-    print("Rule list "+("d" if d_ac > pd_ac else "pd")+ " is more accurate with " +
-         (str(d_ac) if d_ac > pd_ac else str(pd_ac)) + " correctly classified vs. " +
-         (str(pd_ac) if d_ac > pd_ac else str(d_ac)) + " within the Titanic reserve DS.\n")
+            trial_scores = []
+            true_trial_scores = []
+            avg_lg_score_prev = -len(rl.dataset)   # Will make this run at least twice
+            avg_lg_score = 0
+            # Run until "close enough".
+            # NOPE: For now, to graph, we need them all to run the same amount.
+            # while fabs(avg_lg_score_prev - avg_lg_score) > (.05 * len_ds):
+            for _ in range(MCMC_iters/window*multipliers[i]):
+                avg_lg_score_prev = avg_lg_score
+                avg_lg_score = 0
+                for _ in range(window):
+                    if j == 0:
+                        rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], 1, False)
+                        true_curr_score = score(rl, hyperparams[i][0], hyperparams[i][1])
+                    else:
+                        rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], ep, True)
+                        true_curr_score = dp_score(rl, hyperparams[i][0], hyperparams[i][1], ep)
+                    curr_score = score(rl, hyperparams[i][0], hyperparams[i][1])
+                    avg_lg_score += curr_score
+                    # Accumulate all log scores for a specific run through
+                    trial_scores.append(curr_score)
+                    true_trial_scores.append(true_curr_score)
+                avg_lg_score /= window
 
-def runNoNoise(ds, priv_rl):
-    pd_ac = auc(ds, priv_rl)
-    print("The privatized rule list has an auc of " + str(pd_ac) + " on the original, untouched DS.\n")
+            if math.fabs(avg_lg_score_prev - avg_lg_score) < (.05 * len_ds):
+                print("CONVERGENCE FOR ep:" + str(ep))
+            else:
+                print("!NO! CONVERGENCE FOR ep:" + str(ep))
+            all_scores.append(trial_scores)
+            all_true_scores.append(true_trial_scores)
+        MCMC_plot(all_scores, eps, burn_in, labels[i])
+        # Graph plots using the corresponding scoring function (DP or Regular)
+        MCMC_plot(all_true_scores, eps, burn_in, "true_scores_"+labels[i])
 
-def regSysTest():
-    d = run("../Data/shroom_fim.txt", "../Data/UCI_shroom_clean.txt", "edible", 9.0, 1.0, 1000)
-    print("Rule list for Shrooms:\n")
-    d.printNeat()
-    print("\n_____TESTING______\n")
-    print(auc(d.dataset, d))
-    print(score(d, 9.0, 1.0))
-
-def DPSysTest():
-    d = runDP("../Data/adult_fim.txt", "../Data/UCI_adult_clean.txt", ">50k", 7.0, 1.0, .1, 1000)
-    print("DP Rule list for Adult:\n")
-    d.printNeat()
-    print("\n_____TESTING______\n")
-    print(auc(d.dataset, d))
 
 # ------------ FOR EXPERIMENTS ------------
 def avgRuns(rl_labels, epsilons):
     datasets = ["../Data/UCI_adult_clean.txt", "../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
-    hyperparams = [[7.0,1.0], [7.0, 1.0], [3.0, 1.0]]
+    hyperparams = [[13.0,1.0], [7.0, 1.0], [3.0, 1.0]]
     reserve_ds = [readData("../Data/UCI_adult_res.txt"), readData("../Data/UCI_shroom_res.txt"), readData("../Data/kaggle_titanic_clean_res.txt")]
     fims = ["../Data/adult_fim.txt", "../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
     labels = [">50k", "edible", "Survived"]
@@ -124,6 +124,9 @@ def avgRuns(rl_labels, epsilons):
             scores_in_sample = []
             scores_out_sample = []
             pos_score = []
+            dp_pos_score = []
+            pos_out = []
+            dp_pos_out = []
             times = []
             lams = []
             etas = []
@@ -131,49 +134,49 @@ def avgRuns(rl_labels, epsilons):
                 start = time.time()
                 if i == 0:
                     rl = run(fims[j], ds, labels[j], hyperparams[j][0], hyperparams[j][1], MCMC_REPS)
+                    end = time.time()
+                    pos_score.append(score(rl, hyperparams[j][0], hyperparams[j][1]))
+
+                    # Change the DS to make use of the scoring function on the RL, then change it back.
+                    tempDS = rl.dataset
+                    rl.dataset = reserve_ds
+                    pos_out.append(score(rl, hyperparams[j][0], hyperparams[j][1]))
+                    rl.dataset = tempDS
                 else:
                     rl = runDP(fims[j], ds, labels[j], hyperparams[j][0], hyperparams[j][1], epsilons[i], MCMC_REPS)
-                end = time.time()
+                    end = time.time()
+                    pos_score.append(score(rl, hyperparams[j][0], hyperparams[j][1]))
+                    dp_pos_score.append(dp_score(rl, hyperparams[j][0], hyperparams[j][1], epsilons[i]))
+
+                    # Change the DS to make use of the scoring function on the RL, then change it back.
+                    tempDS = rl.dataset
+                    rl.dataset = reserve_ds
+                    pos_out.append(score(rl, hyperparams[j][0], hyperparams[j][1]))
+                    dp_pos_out.append(dp_score(rl, hyperparams[j][0], hyperparams[j][1], epsilons[i]))
+                    rl.dataset = tempDS
+
                 times.append(end-start)
                 scores_in_sample.append(auc(rl.dataset, rl))
                 scores_out_sample.append(auc(reserve_ds[j], rl))
-                pos_score.append(np.exp(score(rl, hyperparams[j][0], hyperparams[j][1])))
                 lams.append(len(rl.rules))
                 etas.append(avgAntecedentLen(rl))
             print("\t\t AUC in -- SD: " + str(np.std(scores_in_sample)) + ", MEAN: " + str(np.mean(scores_in_sample)))
             print("\t\t AUC out -- SD: " + str(np.std(scores_out_sample)) + ", MEAN: " + str(np.mean(scores_out_sample)))
-            print("\t\t Pos Comp -- SD: " + str(np.std(pos_score)) + ", MEAN: " + str(np.mean(pos_score)))
+            print("\t\t LOG Pos IN -- SD: " + str(np.std(pos_score)) + ", MEAN: " + str(np.mean(pos_score)))
+            print("\t\t LOG Pos OUT -- SD: " + str(np.std(pos_out)) + ", MEAN: " + str(np.mean(pos_out)))
+            if i != 0:
+                print("\t\t LOG DP Pos IN -- SD: " + str(np.std(dp_pos_score)) + ", MEAN: " + str(np.mean(dp_pos_score)))
+                print("\t\t LOG DP Pos OUT -- SD: " + str(np.std(dp_pos_out)) + ", MEAN: " + str(np.mean(dp_pos_out)))
             print("\t\t HYPER -- LAM: " + str(hyperparams[j][0]) + " GOT " + str(np.mean(lams)) + " -- ETA: " + str(hyperparams[j][1]) + " GOT " + str(np.mean(etas)))
             print("\t\t AVG TIME: " + str(np.mean(times)))
 
-def fullTest(rl_labels, epsilons):
-    datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
-    reserve_ds = ["../Data/UCI_shroom_res.txt", "../Data/kaggle_titanic_clean_res.txt"]
-    fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
-    labels = ["edible", "Survived"]
-    rls = []
-    print("Rule list\t|\t Dataset \t|\t Epsilon \t|\t Avg ant. len.: eta: 1.0 \t|\t Rule list len.: lam: 7.0 \t|\t Training auROC \t|\t Reserve auROC ")
-    print(TABLE)
-    for j in range(len(datasets)):
-        for i in range(len(rl_labels)):
-            if i == 0:
-                rl = run(fims[j], datasets[j], labels[j], 7.0, 1.0, MCMC_REPS)
-            else:
-                rl = runDP(fims[j], datasets[j], labels[j], 7.0, 1.0, epsilons[i], MCMC_REPS)
-            print("\t" + rl_labels[i] + "\t|\t" + datasets[j] + "\t|\t" + str(epsilons[i]) + "\t|\t" +
-                  str(avgAntecedentLen(rl)) + "\t|\t" + str(len(rl.rules)) + "\t|\t" +
-                  str(auc(rl.dataset, rl)) + "\t|\t" + str(auc(readData(reserve_ds[j]), rl)))
-            rls.append(rl)
-        print(SEP)
-    print(TABLE)
-    for rl in rls:
-        rl.printNeat()
-        print(SEP)
+
 def main():
-    rl_labels = ["Regular RL", "DP ep:1.0", "DP ep:.5", "DP ep:.1"]
-    eps = ['_',1.0, .5, .1]
+    rl_labels = ["Regular RL", "DP ep:.9", "DP ep:.5", "DP ep:.1", "DP ep:.01"]
+    eps = ['_',.9, .5, .1, .01]
 
     # Test: Run all rule lists on all dataset and compare lengths to hyperparameters, and auROC.
     avgRuns(rl_labels, eps)
-# main()
-DPSysTest()
+
+main()
+# MCMC_conv()

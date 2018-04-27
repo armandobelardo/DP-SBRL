@@ -59,7 +59,7 @@ def score(d, lam, eta):
 
 # Notice once again this is a log score, this is why these are not e-exponentiating.
 def dp_score(d, lam, eta, epsilon):
-    return (epsilon*score(d, lam, eta)) - (2*np.log(len(d.dataset)))
+    return (epsilon*score(d, lam, eta)) / (2*np.log(len(d.dataset)+1))
 
 def scoring(d, lam, eta, epsilon, dp):
     return dp_score(d, lam, eta, epsilon) if dp else score(d, lam, eta)
@@ -116,7 +116,9 @@ def mcmc_mh(d, lam, eta, epsilon=1, dp=False):
     if (alteration == -1): # Unsuccessful proposal, d is unchanged.
         return d, False
 
-    Q_factor = Q(d, alteration) / Q(new_rule_list, alteration)
+    # Note that Metropolis Hastings uses Q(old|new)/Q(new|old), and our Q function only takes the "given"
+    # or the term after the |.
+    Q_factor = Q(new_rule_list, alteration) / Q(d, alteration)
     lg_alpha = (scoring(new_rule_list, lam, eta, epsilon, dp) - scoring(d, lam, eta, epsilon, dp)) + np.log(Q_factor)
 
     # Always accept the new rule list if it scores higher. Otherwise, accept it with probability alpha.
@@ -149,7 +151,7 @@ def run(antecedents, dataset, label, lam, eta, loops):
         # original d by the condition in mcmc_mh. Ocassionally, we get a rule list isn't better,
         # with probability alpha, so we cache the best rule list.
         best = d if better else best
-    d.calcPointEstimates()
+    best.calcPointEstimates()
     return best
 
 def runDefault(lam, eta):
@@ -158,7 +160,7 @@ def runDefault(lam, eta):
     for _ in range(LOOP_ITERATIONS):
         d, better = mcmc_mh(d, lam, eta)
         best = d if better else best
-    d.calcPointEstimates()
+    best.calcPointEstimates()
     return best
 
 def runDP(antecedents, dataset, label, lam, eta, epsilon, loops):

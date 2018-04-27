@@ -170,8 +170,8 @@ namespace {
 
 int main(int argc, char** argv) {
   // (confidence pruning)
-  char *filename = (char *)"../Data/UCI_adult_clean.txt";
-  float minsup = 0.20f;
+  char *filename = (char *)"../Data/kaggle_titanic_clean_train.txt";
+  float minsup = 0.1f;
   float minconf = 0.6f;
   for (int i = 1; i < argc; ++i) {
       if (string(argv[i]) == "--file") {
@@ -255,13 +255,14 @@ int main(int argc, char** argv) {
   unordered_map<string, vector<int>> frequent_itemsets(frequent_onesets.begin(), frequent_onesets.end());
 
   while (next_sets.size() > 1) {
+    printf("Here: %d\n", next_sets.size());
     frequent_itemsets.insert(next_sets.begin(), next_sets.end());
     next_sets = getLargerFreqItemsets(next_sets, transactions, minsup, &maximal_items);
   }
   frequent_itemsets.insert(next_sets.begin(), next_sets.end());
 
   {
-    ofstream outputFile("../Data/adult_fim.txt");
+    ofstream outputFile("../Data/titanic_fim.txt");
     printf("-------------Frequent Itemsets------------\n");
     for (auto itemset_support : frequent_itemsets) {
       // freq_sets.push_back(itemset_support.first);
