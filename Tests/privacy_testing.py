@@ -12,7 +12,7 @@ import time
 TABLE = "__________________________________________________________________________________________________________________________________________________________________________________________________________"
 SEP = "\n............................................................................................................................................................................................................\n"
 
-MCMC_REPS = 1000
+MCMC_REPS = 1500
 ACC_REPS = 5
 
 # NEED: Create two rule lists, one private, one not. Compare scores using the score function.
@@ -54,11 +54,11 @@ def auc(ds, rl):
 
 def MCMC_conv():
     MCMC_iters = 2000
-    burn_in = 100     # Burn in
+    burn_in = [170, 70]     # Burn in
     window = 250    # Window of runs
     eps = ['_',.9, .5, .1, .01]
     hyperparams = [[7.0, 1.0], [3.0, 1.0]]
-    multipliers = [2,1]
+    multipliers = [2.5,1]
     datasets = ["../Data/UCI_shroom_clean.txt", "../Data/kaggle_titanic_clean_train.txt"]
     fims = ["../Data/shroom_fim.txt", "../Data/titanic_fim.txt"]
     labels = ["edible", "Survived"]
@@ -67,46 +67,49 @@ def MCMC_conv():
         all_scores = []
         all_true_scores = []
         for j, ep in enumerate(eps):
+            true_start_scores = []
             rl = RuleList(fims[i], ds, labels[i])
-            for _ in range(burn_in * multipliers[i]):
+            for b in range(burn_in[i]):
                 if ep == '_':
                     rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1])
+                    true_start_scores.append(score(rl, hyperparams[i][0], hyperparams[i][1]))
                 else:
                     rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], ep, True)
+                    true_start_scores.append(dp_score(rl, hyperparams[i][0], hyperparams[i][1], ep))
 
             trial_scores = []
-            true_trial_scores = []
             avg_lg_score_prev = -len(rl.dataset)   # Will make this run at least twice
             avg_lg_score = 0
             # Run until "close enough".
             # NOPE: For now, to graph, we need them all to run the same amount.
             # while fabs(avg_lg_score_prev - avg_lg_score) > (.05 * len_ds):
-            for _ in range(MCMC_iters/window*multipliers[i]):
+            for _ in range(int(MCMC_iters/window*multipliers[i])):
                 avg_lg_score_prev = avg_lg_score
                 avg_lg_score = 0
                 for _ in range(window):
                     if j == 0:
-                        rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], 1, False)
+                        rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1])
                         true_curr_score = score(rl, hyperparams[i][0], hyperparams[i][1])
+                        curr_score = true_curr_score
                     else:
                         rl, _ = mcmc_mh(rl, hyperparams[i][0], hyperparams[i][1], ep, True)
                         true_curr_score = dp_score(rl, hyperparams[i][0], hyperparams[i][1], ep)
-                    curr_score = score(rl, hyperparams[i][0], hyperparams[i][1])
+                        curr_score = score(rl, hyperparams[i][0], hyperparams[i][1])
                     avg_lg_score += curr_score
                     # Accumulate all log scores for a specific run through
                     trial_scores.append(curr_score)
-                    true_trial_scores.append(true_curr_score)
+                    true_start_scores.append(true_curr_score)
                 avg_lg_score /= window
 
-            if math.fabs(avg_lg_score_prev - avg_lg_score) < (.05 * len_ds):
+            if math.fabs(avg_lg_score_prev - avg_lg_score) < (.05 * len(rl.dataset)):
                 print("CONVERGENCE FOR ep:" + str(ep))
             else:
                 print("!NO! CONVERGENCE FOR ep:" + str(ep))
             all_scores.append(trial_scores)
-            all_true_scores.append(true_trial_scores)
-        MCMC_plot(all_scores, eps, burn_in, labels[i])
+            all_true_scores.append(true_start_scores)
+        MCMC_plot(all_scores, eps, burn_in[i], labels[i])
         # Graph plots using the corresponding scoring function (DP or Regular)
-        MCMC_plot(all_true_scores, eps, burn_in, "true_scores_"+labels[i])
+        MCMC_plot(all_true_scores, eps, 0, "true_scores_"+labels[i])
 
 
 # ------------ FOR EXPERIMENTS ------------
@@ -118,6 +121,8 @@ def avgRuns(rl_labels, epsilons):
     labels = [">50k", "edible", "Survived"]
 
     for j, ds in enumerate(datasets):
+        if j != 1:
+            continue
         print(ds)
         for i in range(len(rl_labels)):
             print("\t" + rl_labels[i])

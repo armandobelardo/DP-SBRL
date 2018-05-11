@@ -36,9 +36,13 @@ def MCMC_plot(all_scores, eps, burn_in, name):
         #     points_from_zero.append(j*burn_in_slope)
         points_from_zero += scores
         if eps[i] == '_':
-            plt.plot(range(x),points_from_zero,color=colors[i],label='orig')
+            plt.plot(range(burn_in, x+burn_in),points_from_zero,color=colors[i],label='orig')
         else:
-            plt.plot(range(x),points_from_zero,color=colors[i],label='ep' + str(eps[i]))
+            plt.plot(range(burn_in, x+burn_in),points_from_zero,color=colors[i],label='ep' + str(eps[i]))
+    if name == 'Survived':
+        y_min, _ = plt.ylim()
+        plt.ylim(ymin=y_min*1.1)
+    plt.xlim(xmin=burn_in, xmax=burn_in+x)
     plt.xlabel('step')
     plt.ylabel('log$(L*P)$')
     plt.legend()
